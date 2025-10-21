@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background-color: #121212;
+  --surface-color: #1E1E1E;
+  --primary-text-color: #FFFFFF;
+  --secondary-text-color: #A0A0A0;
+  --accent-color: #8CEA00;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+}
+
+/* Custom styles for prose (markdown content) */
+.prose {
+  color: var(--primary-text-color);
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  color: var(--primary-text-color);
+}
+
+.prose a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.prose a:hover {
+  text-decoration: underline;
+}
+
+.prose strong {
+  color: var(--primary-text-color);
+}
+
+.prose code {
+  background-color: var(--surface-color);
+  color: var(--primary-text-color);
+  padding: 0.2em 0.4em;
+  border-radius: 0.3em;
+}
+
+.prose pre {
+  background-color: var(--surface-color);
+  color: var(--primary-text-color);
+  border-radius: 0.5em;
+  padding: 1em;
+  overflow-x: auto;
+}
+
+.prose blockquote {
+  color: var(--secondary-text-color);
+  border-left-color: var(--accent-color);
+}
+
+.prose ul li::marker, .prose ol li::marker {
+  color: var(--secondary-text-color);
+}
