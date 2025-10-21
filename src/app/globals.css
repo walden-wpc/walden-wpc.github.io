@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap');
+/* Removed: @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap'); */
 
 @tailwind base;
 @tailwind components;
@@ -15,7 +15,7 @@
 body {
   background-color: var(--background-color);
   color: var(--primary-text-color);
-  font-family: 'Inter', sans-serif; /* Added font-family */
+  /* Removed: font-family: 'Inter', sans-serif; */
 }
 
 /* Custom styles for prose (markdown content) */
