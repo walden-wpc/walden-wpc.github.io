@@ -22,6 +22,7 @@ export default function ProjectsPage() {
             key={project.slug}
             slug={project.slug}
             title={project.title}
+            date={project.date}
             summary={project.summary}
             image={project.image}
             tags={project.tags}
