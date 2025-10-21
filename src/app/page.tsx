@@ -1,6 +1,13 @@
 import Link from 'next/link';
+import { getSortedContentData } from '@/lib/content';
+import ProjectCard from '@/components/ProjectCard';
+import WritingCard from '@/components/WritingCard';
+import { Project, Writing } from '@/lib/types';
 
 export default function Home() {
+  const latestProjects = getSortedContentData('projects').slice(0, 3);
+  const latestWritings = getSortedContentData('writings').slice(0, 3);
+
   return (
     <>
       <section className="relative py-32 text-center overflow-hidden">
@@ -29,19 +36,17 @@ export default function Home() {
                   <h2 className="text-4xl font-bold border-b-2 border-accent inline-block pb-2">Featured Projects</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  <Link href="/projects/personal-website" className="block group">
-                      <div className="bg-surface rounded-xl p-8 border border-surface group-hover:border-accent group-hover:-translate-y-1 transition-all duration-300 h-full">
-                          <h3 className="text-2xl font-semibold mb-6 text-text-primary group-hover:text-accent transition-colors duration-300">Personal Website</h3>
-                          <p className="text-text-secondary leading-relaxed">The very site you are on. Built with Next.js and a passion for clean design.</p>
-                      </div>
-                  </Link>
-                  <Link href="/projects/data-visualizer" className="block group">
-                      <div className="bg-surface rounded-xl p-8 border border-surface group-hover:border-accent group-hover:-translate-y-1 transition-all duration-300 h-full">
-                          <h3 className="text-2xl font-semibold mb-6 text-text-primary group-hover:text-accent transition-colors duration-300">Data Visualizer</h3>
-                          <p className="text-text-secondary leading-relaxed">An interactive tool to visualize complex data sets using D3.js and React.</p>
-                      </div>
-                  </Link>
-                  {/* Add more project cards as needed */}
+                {latestProjects.map((project: Project) => (
+                  <ProjectCard
+                    key={project.slug}
+                    slug={project.slug}
+                    title={project.title}
+                    date={project.date}
+                    summary={project.summary}
+                    image={project.image}
+                    tags={project.tags}
+                  />
+                ))}
               </div>
           </div>
       </section>
@@ -52,18 +57,16 @@ export default function Home() {
                   <h2 className="text-4xl font-bold border-b-2 border-accent inline-block pb-2">Latest Writings</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  <Link href="/writings/deep-dive-css" className="block group">
-                      <div className="bg-surface rounded-xl p-8 border border-surface group-hover:border-accent group-hover:-translate-y-1 transition-all duration-300 h-full">
-                          <h3 className="text-2xl font-semibold mb-6 text-text-primary group-hover:text-accent transition-colors duration-300">Deep Dive into Modern CSS</h3>
-                          <p className="text-text-secondary leading-relaxed">Exploring the power of Grid, Flexbox, and Custom Properties.</p>
-                      </div>
-                  </Link>
-                  <Link href="/writings/hello-world" className="block group">
-                      <div className="bg-surface rounded-xl p-8 border border-surface group-hover:border-accent group-hover:-translate-y-1 transition-all duration-300 h-full">
-                          <h3 className="text-2xl font-semibold mb-6 text-text-primary group-hover:text-accent transition-colors duration-300">Hello World: A New Journey</h3>
-                          <p className="text-text-secondary leading-relaxed">The obligatory first post documenting the start of a new digital space.</p>
-                      </div>
-                  </Link>
+                {latestWritings.map((writing: Writing) => (
+                  <WritingCard
+                    key={writing.slug}
+                    slug={writing.slug}
+                    title={writing.title}
+                    date={writing.date}
+                    summary={writing.summary}
+                    tags={writing.tags}
+                  />
+                ))}
               </div>
           </div>
       </section>

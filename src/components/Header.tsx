@@ -14,7 +14,7 @@ export default function Header() {
           <Link href="/writings" className="text-text-secondary hover:text-text-primary transition-colors duration-300 ml-8 font-medium">
             Writings
           </Link>
-          <Link href="#" className="text-text-secondary hover:text-text-primary transition-colors duration-300 ml-8 font-medium">
+          <Link href="/about" className="text-text-secondary hover:text-text-primary transition-colors duration-300 ml-8 font-medium">
             About
           </Link>
         </nav>

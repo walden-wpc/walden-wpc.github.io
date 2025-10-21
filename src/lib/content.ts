@@ -63,3 +63,15 @@ export async function getContentBySlug(slug: string, contentType: ContentType) {
     content,
   };
 }
+
+export async function getSinglePageContent(fileName: string) {
+  const fullPath = path.join(contentDirectory, `${fileName}.mdx`);
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
+
+  const { data, content } = matter(fileContents);
+
+  return {
+    frontmatter: data,
+    content,
+  };
+}
