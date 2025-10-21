@@ -7,7 +7,11 @@ const config = {
   theme: {
     extend: {
       colors: {
-        brand: '#8CEA00',
+        background: '#121212',
+        surface: '#1E1E1E',
+        accent: '#8CEA00',
+        'text-primary': '#FFFFFF',
+        'text-secondary': '#A0A0A0',
       },
     },
   },
