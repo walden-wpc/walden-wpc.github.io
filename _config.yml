@@ -1,0 +1,22 @@
+title: Walden
+email: your-email@example.com
+description: >-
+  A digital garden for deep thoughts and minimal living.
+# baseurl: "" # [REMOVED] Let Jekyll handle this locally.
+url: "https://walden-wpc.github.io"
+
+# Build settings
+# theme: minima (Disabled to use custom styles)
+future: true # [CRITICAL] Show posts even if dated "tomorrow" (server time issue)
+timezone: Asia/Taipei
+plugins:
+  - jekyll-feed
+social:
+  linkedin: https://linkedin.com/in/yourname
+  mastodon: https://mastodon.social/@yourname
+  email: mailto:your-email@example.com
+
+# Build settings
+theme: minima
+plugins:
+  - jekyll-feed

@@ -1,0 +1,54 @@
+{
+	"New Jekyll Post (Essay)": {
+		"prefix": "new-essay",
+		"scope": "markdown",
+		"body": [
+			"---",
+			"layout: post",
+			"title: ${1:Title}",
+			"date: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}",
+			"category: Essay",
+			"---",
+			"",
+			"${0:Content goes here...}"
+		],
+		"description": "Create a new Essay post front matter"
+	},
+	"New Jekyll Project": {
+		"prefix": "new-project",
+		"scope": "markdown",
+		"body": [
+			"---",
+			"layout: project",
+			"title: ${1:Project Name}",
+			"date: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}",
+			"category: Project",
+			"role: ${2:Developer}",
+			"description: ${3:Short Description}",
+			"image: /assets/images/${4:image.jpg}",
+			"---",
+			"",
+			"## 挑戰",
+			"${5:Challenge description...}",
+			"",
+			"## 結果",
+			"${6:Result description...}"
+		],
+		"description": "Create a new Project post front matter"
+	},
+	"New Jekyll Fragment": {
+		"prefix": "new-fragment",
+		"scope": "markdown",
+		"body": [
+			"---",
+			"layout: default",
+			"title: Fragment",
+			"date: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}",
+			"category: Fragment",
+			"type: ${1:Idea}",
+			"---",
+			"${0:Thought goes here...}"
+		],
+		"description": "Create a new Fragment post front matter"
+	}
+}

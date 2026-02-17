@@ -1,0 +1,23 @@
+---
+layout: default
+---
+<article class="project-detail">
+    <header class="project-header">
+        <div class="project-cover" style="background-color: #e0e0e0; aspect-ratio: 16/9; margin-bottom: 2rem;">
+            {% if page.image %}
+            <img src="{{ page.image | relative_url }}" alt="{{ page.title }}"
+                style="width:100%; height:100%; object-fit:cover;">
+            {% endif %}
+        </div>
+        <h1 class="font-serif" style="font-size: 2.5rem; margin-bottom: 0.5rem;">{{ page.title }}</h1>
+        <div class="project-meta text-secondary font-sans" style="display: flex; gap: 1rem; font-size: 0.9rem;">
+            <span>{{ page.date | date: "%Y" }}</span>
+            <span>Role: {{ page.role }}</span>
+        </div>
+    </header>
+
+    <div class="prose font-sans" style="margin-top: 3rem;">
+        <p class="lead">{{ page.description }}</p>
+        {{ content }}
+    </div>
+</article>
