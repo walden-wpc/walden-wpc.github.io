@@ -1,0 +1,17 @@
+# 私人筆記 (不上傳)
+_notes/
+_drafts/
+*.private.md
+
+# 本地預覽用的暫存資料夾
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# 系統檔案
+.DS_Store
+Thumbs.db
+
+# VS Code 本機設定 (選擇性，如果不想共享)
+# .vscode/

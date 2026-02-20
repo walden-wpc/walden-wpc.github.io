@@ -22,35 +22,19 @@ layout: default
     </div>
 </section>
 
-<!-- 2. Essays (Clean List) -->
-<section id="essays">
-    <span class="section-label">Essays // 論述</span>
+<!-- 2. Thoughts (formerly Essays) -->
+<section id="thoughts">
+    <span class="section-label">Thoughts // 思考</span>
 
-    <div class="essay-list">
+    <div class="thought-list">
+        {% assign thoughts = site.posts | where: "category", "Thought" %}
         {% assign essays = site.posts | where: "category", "Essay" %}
-        {% for essay in essays %}
-        <a href="{{ essay.url | relative_url }}" class="essay-item">
-            <h3 class="essay-title">{{ essay.title }}</h3>
-            <span class="essay-date">{{ essay.date | date: "%Y.%m.%d" }}</span>
+        {% assign all_thoughts = thoughts | concat: essays | sort: "date" | reverse %}
+        {% for thought in all_thoughts %}
+        <a href="{{ thought.url | relative_url }}" class="thought-item">
+            <h3 class="thought-title">{{ thought.title }}</h3>
+            <span class="thought-date">{{ thought.date | date: "%Y.%m.%d" }}</span>
         </a>
-        {% endfor %}
-    </div>
-</section>
-
-<!-- 3. Fragments (Stream of Consciousness) -->
-<section id="fragments">
-    <span class="section-label">Fragments // 隨想</span>
-
-    <div class="fragment-stream">
-        {% assign fragments = site.posts | where: "category", "Fragment" %}
-        {% for fragment in fragments %}
-        <div class="fragment-item">
-            <span class="fragment-meta">{{ fragment.date | date: "%Y.%m.%d" }} — {{ fragment.type | default: 'Fragment'
-                }}</span>
-            <div class="fragment-content">
-                {{ fragment.content }}
-            </div>
-        </div>
         {% endfor %}
     </div>
 </section>

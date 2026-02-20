@@ -1,22 +1,21 @@
 title: Walden
-email: your-email@example.com
-description: >-
-  A digital garden for deep thoughts and minimal living.
-# baseurl: "" # [REMOVED] Let Jekyll handle this locally.
+# subtitle: ""  # 首頁副標題，填入內容即可開啟
+bio: >-
+  我是張文柏。就學期間涉獵神經科學、心理學、生命科學等多領域知識的理論和實做。目前正在思考這些知識與當前AI工具結合的可能，期許能找到實用性、新技術、人文思維的平衡點。
+now: >-
+  目前正在思考AI在實際生活落地的使用場景還有哪些，並結合新工具多方面嘗試以快速實現新靈感滿足潛在需求。
+description: A digital garden for deep thoughts and minimal living.
 url: "https://walden-wpc.github.io"
 
 # Build settings
-# theme: minima (Disabled to use custom styles)
-future: true # [CRITICAL] Show posts even if dated "tomorrow" (server time issue)
+# NO theme: minima — we use our own _layouts/
+future: true
 timezone: Asia/Taipei
 plugins:
   - jekyll-feed
-social:
-  linkedin: https://linkedin.com/in/yourname
-  mastodon: https://mastodon.social/@yourname
-  email: mailto:your-email@example.com
 
-# Build settings
-theme: minima
-plugins:
-  - jekyll-feed
+# Social Links
+social:
+  linkedin: https://www.linkedin.com/in/wen-po-chang-842554292/
+  # mastodon: https://mastodon.social/@yourname
+  email: wpc.walden@gmail.com

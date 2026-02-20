@@ -6,39 +6,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ page.description | default: site.description }}">
     <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
-    <!-- [FIX] Hardcoded absolute path with Cache Buster -->
+
+    <!-- SEO: Open Graph -->
+    <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+    <meta property="og:description" content="{{ page.description | default: site.description }}">
+    <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+    <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+    <meta property="og:site_name" content="{{ site.title }}">
+    {% if page.image %}
+    <meta property="og:image" content="{{ site.url }}{{ page.image }}">{% endif %}
+
+    <!-- SEO: Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+    <meta name="twitter:description" content="{{ page.description | default: site.description }}">
+
+    <link rel="canonical" href="{{ site.url }}{{ page.url }}">
     <link rel="stylesheet" href="/style.css?v={{ site.time | date: '%s' }}">
-    <!-- Import Maps for Three.js -->
-    <script type="importmap">
-    {
-        "imports": {
-            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-        }
-    }
-    </script>
 </head>
 
 <body>
 
+    <!-- Side Panel (About Me) -->
+    <div class="panel-overlay" id="panel-overlay"></div>
+
+    <aside class="about-panel" id="about-panel">
+        <button class="about-close" id="panel-close" aria-label="關閉">✕</button>
+
+        <!-- Identity -->
+        <div>
+            <p class="about-tagline">About Me</p>
+            <h2 class="about-name">{{ site.author | default: site.title }}</h2>
+        </div>
+
+        <!-- Bio -->
+        <div class="about-bio">
+            <p>{{ site.bio | default: "請在 _config.yml 的 bio 欄位填入您的介紹。" }}</p>
+        </div>
+
+        <!-- Now -->
+        {% if site.now %}
+        <div class="about-now">
+            <p class="about-tagline" style="margin-bottom: 0.5rem;">Now</p>
+            <div class="about-bio" style="font-size: 15px;">
+                {{ site.now }}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Links -->
+        <div class="about-links">
+            {% if site.social.email %}
+            <a href="{{ site.social.email }}" class="about-link">
+                <span>Email</span><span>↗</span>
+            </a>
+            {% endif %}
+            {% if site.social.linkedin %}
+            <a href="{{ site.social.linkedin }}" target="_blank" class="about-link">
+                <span>LinkedIn</span><span>↗</span>
+            </a>
+            {% endif %}
+            {% if site.social.mastodon %}
+            <a href="{{ site.social.mastodon }}" target="_blank" class="about-link">
+                <span>Mastodon</span><span>↗</span>
+            </a>
+            {% endif %}
+        </div>
+    </aside>
+
+    <!-- Header -->
     <header class="site-header">
-        <h1 class="site-title"><a href="/">{{ site.title }}</a></h1>
+        <div class="site-identity">
+            <h1 class="site-title"><a href="/">{{ site.title }}</a></h1>
+            {% if site.subtitle %}
+            <p class="site-subtitle">{{ site.subtitle }}</p>
+            {% endif %}
+        </div>
         <nav class="main-nav">
             <ul>
                 {% if page.url == "/" %}
-                <li><a href="#projects">專案</a></li>
-                <li><a href="#essays">論述</a></li>
-                <li><a href="#fragments">隨想</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#thoughts">Thoughts</a></li>
                 {% else %}
-                <li><a href="/">← 返回首頁</a></li>
+                <li><a href="/">← Home</a></li>
                 {% endif %}
+                <li><button class="about-trigger" id="about-trigger">About Me</button></li>
             </ul>
         </nav>
     </header>
 
     {% if page.url == "/" %}
     <div id="walden-container"></div>
-    <script type="module" src="/assets/js/walden.js"></script>
+    <script src="/assets/js/walden.js"></script>
     {% endif %}
 
     <main class="article-container">
@@ -50,15 +109,30 @@
         <div class="footer-content">
             <span>&copy; {{ "now" | date: "%Y" }} {{ site.title }}</span>
             <span class="separator">/</span>
-            <span>Paper & Ink</span>
+            <span>Paper &amp; Ink</span>
         </div>
-
         <div class="footer-social">
             {% for link in site.social %}
             <a href="{{ link[1] }}" target="_blank" class="social-link">{{ link[0] | capitalize }}</a>
             {% endfor %}
         </div>
     </footer>
+
+    <!-- Side Panel Script -->
+    <script>
+        const trigger = document.getElementById('about-trigger');
+        const panel = document.getElementById('about-panel');
+        const overlay = document.getElementById('panel-overlay');
+        const closeBtn = document.getElementById('panel-close');
+        if (trigger) {
+            const open = () => { panel.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow = 'hidden'; };
+            const close = () => { panel.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow = ''; };
+            trigger.addEventListener('click', open);
+            closeBtn.addEventListener('click', close);
+            overlay.addEventListener('click', close);
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+        }
+    </script>
 
 </body>
 
