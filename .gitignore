@@ -14,5 +14,7 @@ _site/
 .DS_Store
 Thumbs.db
 
+Gemfile
+
 # VS Code 本機設定 (選擇性，如果不想共享)
 # .vscode/
