@@ -9,15 +9,42 @@ layout: default
                 style="width:100%; height:100%; object-fit:cover;">
             {% endif %}
         </div>
-        <h1 class="font-serif" style="font-size: 2.5rem; margin-bottom: 0.5rem;">{{ page.title }}</h1>
-        <div class="project-meta text-secondary font-sans" style="display: flex; gap: 1rem; font-size: 0.9rem;">
-            <span>{{ page.date | date: "%Y" }}</span>
-            <span>Role: {{ page.role }}</span>
+        <h1 class="text-serif" style="font-size: 2.5rem; margin-bottom: 1rem;">{{ page.title }}</h1>
+
+        <div class="project-info-block">
+            {% if page.date %}
+            <div class="project-info-row">
+                <span class="project-info-label">Year</span>
+                <span>{{ page.date | date: "%Y" }}</span>
+            </div>
+            {% endif %}
+            {% if page.spend %}
+            <div class="project-info-row">
+                <span class="project-info-label">Time</span>
+                <span>{{ page.spend }}</span>
+            </div>
+            {% endif %}
+            {% if page.tags %}
+            <div class="project-info-row">
+                <span class="project-info-label">Tags</span>
+                <span>{% for tag in page.tags %}{{ tag }}{% unless forloop.last %} · {% endunless %}{% endfor %}</span>
+            </div>
+            {% endif %}
+            {% if page.liveUrl or page.githubUrl %}
+            <div class="project-info-row">
+                <span class="project-info-label">Links</span>
+                <span>
+                    {% if page.liveUrl %}<a href="{{ page.liveUrl }}" target="_blank">Live ↗</a>{% endif %}
+                    {% if page.liveUrl and page.githubUrl %} &nbsp;{% endif %}
+                    {% if page.githubUrl %}<a href="{{ page.githubUrl }}" target="_blank">GitHub ↗</a>{% endif %}
+                </span>
+            </div>
+            {% endif %}
         </div>
     </header>
 
-    <div class="prose font-sans" style="margin-top: 3rem;">
-        <p class="lead">{{ page.description }}</p>
+    <div class="prose" style="margin-top: 3rem;">
+        <p class="lead" style="font-size: 1.1em; color: var(--color-text-secondary); margin-bottom: 2rem;">{{ page.description }}</p>
         {{ content }}
     </div>
 </article>

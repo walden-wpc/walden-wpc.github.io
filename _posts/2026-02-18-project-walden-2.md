@@ -2,8 +2,6 @@
 layout: project
 title: Walden 2.0
 date: 2026-02-18
-category: Project
-role: Full Stack
 description: A digital garden built with Zen principles.
 image: /assets/images/walden-preview.jpg
 ---

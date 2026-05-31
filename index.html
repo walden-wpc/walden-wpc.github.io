@@ -7,34 +7,56 @@ layout: default
     <span class="section-label">Projects // 實作</span>
 
     <div class="project-grid">
-        {% assign projects = site.posts | where: "category", "Project" %}
+        {% assign projects = site.posts | where: "layout", "project" %}
         {% for project in projects %}
         <a href="{{ project.url | relative_url }}" class="project-item">
-            <div class="project-thumb" style="background-color: #e0e0e0;">
+            <div class="project-thumb">
                 {% if project.image %}
-                <!-- <img src="{{ project.image }}" alt=""> -->
+                <img src="{{ project.image }}" alt="{{ project.title }}" style="width:100%; height:100%; object-fit:cover; display:block;">
                 {% endif %}
             </div>
             <h3 class="project-title">{{ project.title }}</h3>
             <p class="project-desc">{{ project.description }}</p>
+            <div class="project-card-meta">
+                {% if project.spend %}<span class="project-spend">{{ project.spend }}</span>{% endif %}
+                {% if project.tags %}
+                <span class="project-tags">
+                    {% for tag in project.tags limit:3 %}{{ tag }}{% unless forloop.last %} · {% endunless %}{% endfor %}
+                </span>
+                {% endif %}
+            </div>
         </a>
         {% endfor %}
     </div>
 </section>
 
-<!-- 2. Thoughts (formerly Essays) -->
-<section id="thoughts">
-    <span class="section-label">Thoughts // 思考</span>
+<!-- 2. About (inline) -->
+<section id="about">
+    <span class="section-label">About // 關於</span>
 
-    <div class="thought-list">
-        {% assign thoughts = site.posts | where: "category", "Thought" %}
-        {% assign essays = site.posts | where: "category", "Essay" %}
-        {% assign all_thoughts = thoughts | concat: essays | sort: "date" | reverse %}
-        {% for thought in all_thoughts %}
-        <a href="{{ thought.url | relative_url }}" class="thought-item">
-            <h3 class="thought-title">{{ thought.title }}</h3>
-            <span class="thought-date">{{ thought.date | date: "%Y.%m.%d" }}</span>
-        </a>
-        {% endfor %}
+    <div class="about-inline">
+        <h2 class="about-inline-name">{{ site.author | default: site.title }}</h2>
+
+        {% if site.bio %}
+        <div class="about-inline-bio">
+            <p>{{ site.bio }}</p>
+        </div>
+        {% endif %}
+
+        {% if site.now %}
+        <div class="about-inline-now">
+            <p class="about-inline-label">Now</p>
+            <p>{{ site.now }}</p>
+        </div>
+        {% endif %}
+
+        <div class="about-inline-links">
+            {% if site.social.email %}
+            <a href="mailto:{{ site.social.email }}" class="about-link-item">Email ↗</a>
+            {% endif %}
+            {% if site.social.linkedin %}
+            <a href="{{ site.social.linkedin }}" target="_blank" class="about-link-item">LinkedIn ↗</a>
+            {% endif %}
+        </div>
     </div>
 </section>
