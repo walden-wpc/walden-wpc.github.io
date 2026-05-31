@@ -412,6 +412,14 @@ section {
     margin-bottom: 1.5em;
 }
 
+.prose img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+    margin: var(--spacing-md) 0;
+}
+
 .prose h2 {
     margin-top: 2em;
     margin-bottom: 0.8em;
