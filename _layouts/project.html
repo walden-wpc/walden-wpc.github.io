@@ -3,12 +3,10 @@ layout: default
 ---
 <article class="project-detail">
     <header class="project-header">
-        <div class="project-cover" style="background-color: #e0e0e0; aspect-ratio: 16/9; margin-bottom: 2rem;">
-            {% if page.image %}
-            <img src="{{ page.image | relative_url }}" alt="{{ page.title }}"
-                style="width:100%; height:100%; object-fit:cover;">
-            {% endif %}
-        </div>
+        {% if page.image %}
+        <img src="{{ page.image | relative_url }}" alt="{{ page.title }}"
+            style="width:100%; display:block; margin-bottom: 2rem;">
+        {% endif %}
         <h1 class="text-serif" style="font-size: 2.5rem; margin-bottom: 1rem;">{{ page.title }}</h1>
 
         <div class="project-info-block">

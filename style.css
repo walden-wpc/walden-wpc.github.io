@@ -426,6 +426,35 @@ section {
     font-size: 1.4em;
 }
 
+.prose details {
+    border-left: 2px solid rgba(0,0,0,0.1);
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin: var(--spacing-md) 0;
+    color: var(--color-text-secondary);
+}
+
+.prose summary {
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    letter-spacing: 0.03em;
+    user-select: none;
+    list-style: none;
+}
+
+.prose summary::before {
+    content: '▶ ';
+    font-size: 10px;
+    opacity: 0.5;
+}
+
+.prose details[open] summary::before {
+    content: '▼ ';
+}
+
+.prose details[open] {
+    color: var(--color-text-primary);
+}
+
 .prose blockquote {
     border-left: 2px solid var(--color-accent);
     padding-left: var(--spacing-md);
