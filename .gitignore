@@ -15,6 +15,7 @@ _site/
 Thumbs.db
 
 Gemfile
+assets/images/make_brain_gif.py
 
 # VS Code 本機設定 (選擇性，如果不想共享)
 # .vscode/
