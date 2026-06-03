@@ -5,13 +5,17 @@ bio: >-
   我是張文柏。就學期間涉獵神經科學、心理學、生命科學等多領域知識的理論和實做。目前正在思考這些知識與當前AI工具結合的可能，期許能找到實用性、新技術、人文思維的平衡點。
 now: >-
   目前正在思考AI在實際生活落地的使用場景還有哪些，並結合新工具多方面嘗試以快速實現新靈感滿足潛在需求。
-description: A digital garden for deep thoughts and minimal living.
+description: 張文柏的個人網站 — 紀錄神經科學、心理學與 AI 工具結合的專案與思考。
+image: /assets/images/walden_card.png
 url: "https://walden-wpc.github.io"
 
 # Build settings
 # NO theme: minima — we use our own _layouts/
 future: true
 timezone: Asia/Taipei
+kramdown:
+  hard_wrap: true
+
 plugins:
   - jekyll-feed
 

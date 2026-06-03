@@ -6,57 +6,55 @@ layout: default
 <section id="projects">
     <span class="section-label">Projects // 實作</span>
 
+    {% assign all_projects = site.posts | where: "layout", "project" %}
+    {% assign featured = all_projects | where: "featured", true %}
+    {% assign others = all_projects | where_exp: "p", "p.featured != true" %}
+    {% assign ordered = featured | concat: others %}
+    {% assign fcount = featured.size %}
+
     <div class="project-grid">
-        {% assign projects = site.posts | where: "layout", "project" %}
-        {% for project in projects %}
-        <a href="{{ project.url | relative_url }}" class="project-item">
-            <div class="project-thumb">
-                {% if project.image %}
-                <img src="{{ project.image }}" alt="{{ project.title }}" style="width:100%; height:100%; object-fit:cover; display:block;">
-                {% endif %}
-            </div>
-            <h3 class="project-title">{{ project.title }}</h3>
+        {% for project in ordered %}
+        <div class="project-item {% if forloop.index0 >= fcount and fcount > 0 %}project-hidden{% endif %}">
+            <a href="{{ project.url | relative_url }}" class="project-thumb-link">
+                <div class="project-thumb">
+                    {% if project.image %}
+                    <img src="{{ project.image }}" alt="{{ project.title }}" style="width:100%; height:100%; object-fit:cover; display:block;">
+                    {% endif %}
+                </div>
+            </a>
+            <a href="{{ project.url | relative_url }}" class="project-title-link">
+                <h3 class="project-title">{{ project.title }}</h3>
+            </a>
             <p class="project-desc">{{ project.description }}</p>
             <div class="project-card-meta">
-                {% if project.spend %}<span class="project-spend">{{ project.spend }}</span>{% endif %}
+                {% if project.spend %}<span class="project-spend">耗時 {{ project.spend }}</span>{% endif %}
                 {% if project.tags %}
                 <span class="project-tags">
                     {% for tag in project.tags limit:3 %}{{ tag }}{% unless forloop.last %} · {% endunless %}{% endfor %}
                 </span>
                 {% endif %}
             </div>
-        </a>
+            {% if project.liveUrl or project.githubUrl %}
+            <div class="project-card-links">
+                {% if project.liveUrl %}<a href="{{ project.liveUrl }}" target="_blank" rel="noopener" class="card-link card-link-live">實際體驗 ↗</a>{% endif %}
+                {% if project.githubUrl %}<a href="{{ project.githubUrl }}" target="_blank" rel="noopener" class="card-link card-link-code">原始碼 ↗</a>{% endif %}
+            </div>
+            {% endif %}
+        </div>
         {% endfor %}
     </div>
+
+    {% if fcount > 0 and others.size > 0 %}
+    <button id="show-more-projects" class="show-more-btn">展開更多專案 ↓</button>
+    {% endif %}
 </section>
 
-<!-- 2. About (inline) -->
-<section id="about">
-    <span class="section-label">About // 關於</span>
-
-    <div class="about-inline">
-        <h2 class="about-inline-name">{{ site.author | default: site.title }}</h2>
-
-        {% if site.bio %}
-        <div class="about-inline-bio">
-            <p>{{ site.bio }}</p>
-        </div>
-        {% endif %}
-
-        {% if site.now %}
-        <div class="about-inline-now">
-            <p class="about-inline-label">Now</p>
-            <p>{{ site.now }}</p>
-        </div>
-        {% endif %}
-
-        <div class="about-inline-links">
-            {% if site.social.email %}
-            <a href="mailto:{{ site.social.email }}" class="about-link-item">Email ↗</a>
-            {% endif %}
-            {% if site.social.linkedin %}
-            <a href="{{ site.social.linkedin }}" target="_blank" class="about-link-item">LinkedIn ↗</a>
-            {% endif %}
-        </div>
-    </div>
-</section>
+<script>
+    const moreBtn = document.getElementById('show-more-projects');
+    if (moreBtn) {
+        moreBtn.addEventListener('click', () => {
+            document.querySelectorAll('.project-hidden').forEach(el => el.classList.remove('project-hidden'));
+            moreBtn.remove();
+        });
+    }
+</script>

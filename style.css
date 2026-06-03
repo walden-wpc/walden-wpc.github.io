@@ -231,6 +231,76 @@ section {
     font-family: var(--font-sans);
 }
 
+/* External links on project card */
+.project-card-links {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+}
+
+.card-link {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    padding: 5px 12px;
+    border: 1px solid var(--color-text-primary);
+    border-radius: 2px;
+    color: var(--color-text-primary);
+    transition: background 0.2s, color 0.2s;
+}
+
+.card-link:hover {
+    background: var(--color-text-primary);
+    color: var(--color-bg);
+    border-bottom-color: var(--color-text-primary);
+}
+
+.card-link-live {
+    background: var(--color-text-primary);
+    color: var(--color-bg);
+}
+
+.card-link-live:hover {
+    opacity: 0.8;
+}
+
+/* Title link reset */
+.project-title-link,
+.project-thumb-link {
+    border-bottom: none;
+}
+
+.project-title-link:hover {
+    border-bottom: none;
+}
+
+.project-item:hover .project-title {
+    color: var(--color-text-secondary);
+}
+
+/* Hidden projects + show more */
+.project-hidden {
+    display: none;
+}
+
+.show-more-btn {
+    display: block;
+    margin: var(--spacing-lg) auto 0;
+    background: none;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    padding: 10px 24px;
+    font-family: var(--font-sans);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.show-more-btn:hover {
+    border-color: var(--color-text-primary);
+    color: var(--color-text-primary);
+}
+
 /* ===================================
    2. Thoughts (formerly Essays)
    =================================== */
@@ -341,13 +411,19 @@ section {
 }
 
 .social-link {
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    color: var(--color-text-primary);
+    padding: 4px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.18);
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .social-link:hover {
-    border-bottom-color: var(--color-accent);
-    color: var(--color-text-primary);
+    background: var(--color-text-primary);
+    color: var(--color-bg);
+    border-color: var(--color-text-primary);
 }
 
 /* ===================================
@@ -413,11 +489,41 @@ section {
 }
 
 .prose img {
-    width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: cover;
+    max-width: 100%;
+    height: auto;
     display: block;
+    margin: var(--spacing-md) auto;
+}
+
+/* Tables in article body */
+.prose table {
+    width: 100%;
+    border-collapse: collapse;
     margin: var(--spacing-md) 0;
+    font-family: var(--font-sans);
+    font-size: var(--font-size-sm);
+}
+
+.prose th,
+.prose td {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 8px 12px;
+    text-align: left;
+    line-height: 1.5;
+}
+
+.prose th {
+    background: rgba(0, 0, 0, 0.03);
+    font-weight: 600;
+}
+
+/* KaTeX math font size match prose */
+.prose .katex {
+    font-size: 1em;
+}
+.prose .katex-display {
+    margin: 1.5em 0;
+    overflow-x: auto;
 }
 
 .prose h2 {
