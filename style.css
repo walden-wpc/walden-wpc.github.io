@@ -9,13 +9,6 @@
     font-display: block;
 }
 
-@font-face {
-    font-family: "Maple Mono CN";
-    src: url("/assets/fonts/MapleMono-CN-Bold.ttf") format("truetype");
-    font-weight: 700;
-    font-display: block;
-}
-
 /* JS 確認 Maple Mono CN 在 5 秒內載入成功，才加上此 class 切換字體 */
 html.fonts-ready {
     --font-mono: "Maple Mono CN", ui-monospace, Consolas, "Courier New", "Microsoft JhengHei", monospace;
