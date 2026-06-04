@@ -6,6 +6,7 @@ layout: default
 <section id="projects">
     <span class="section-label">Projects // 實作</span>
 
+    {% comment %} site.posts 已預設依日期新→舊排序；featured 置頂，其餘依日期 {% endcomment %}
     {% assign all_projects = site.posts | where: "layout", "project" %}
     {% assign featured = all_projects | where: "featured", true %}
     {% assign others = all_projects | where_exp: "p", "p.featured != true" %}
@@ -14,17 +15,13 @@ layout: default
 
     <div class="project-grid">
         {% for project in ordered %}
-        <div class="project-item {% if forloop.index0 >= fcount and fcount > 0 %}project-hidden{% endif %}">
-            <a href="{{ project.url | relative_url }}" class="project-thumb-link">
-                <div class="project-thumb">
-                    {% if project.image %}
-                    <img src="{{ project.image }}" alt="{{ project.title }}" style="width:100%; height:100%; object-fit:cover; display:block;">
-                    {% endif %}
-                </div>
-            </a>
-            <a href="{{ project.url | relative_url }}" class="project-title-link">
-                <h3 class="project-title">{{ project.title }}</h3>
-            </a>
+        <a href="{{ project.url | relative_url }}" class="project-item {% if forloop.index0 >= fcount and fcount > 0 %}project-hidden{% endif %}">
+            <div class="project-thumb">
+                {% if project.image %}
+                <img src="{{ project.image }}" alt="{{ project.title }}" style="width:100%; height:100%; object-fit:cover; display:block;">
+                {% endif %}
+            </div>
+            <h3 class="project-title">{{ project.title }}</h3>
             <p class="project-desc">{{ project.description }}</p>
             <div class="project-card-meta">
                 {% if project.spend %}<span class="project-spend">耗時 {{ project.spend }}</span>{% endif %}
@@ -34,27 +31,21 @@ layout: default
                 </span>
                 {% endif %}
             </div>
-            {% if project.liveUrl or project.githubUrl %}
-            <div class="project-card-links">
-                {% if project.liveUrl %}<a href="{{ project.liveUrl }}" target="_blank" rel="noopener" class="card-link card-link-live">實際體驗 ↗</a>{% endif %}
-                {% if project.githubUrl %}<a href="{{ project.githubUrl }}" target="_blank" rel="noopener" class="card-link card-link-code">原始碼 ↗</a>{% endif %}
-            </div>
-            {% endif %}
-        </div>
+        </a>
         {% endfor %}
     </div>
 
-    {% if fcount > 0 and others.size > 0 %}
-    <button id="show-more-projects" class="show-more-btn">展開更多專案 ↓</button>
+    {% if others.size > 0 %}
+    <a href="/projects/" class="show-more-btn">查看更多專案 →</a>
     {% endif %}
 </section>
 
-<script>
-    const moreBtn = document.getElementById('show-more-projects');
-    if (moreBtn) {
-        moreBtn.addEventListener('click', () => {
-            document.querySelectorAll('.project-hidden').forEach(el => el.classList.remove('project-hidden'));
-            moreBtn.remove();
-        });
-    }
-</script>
+<!-- 2. About Me -->
+<section id="about">
+    <span class="section-label">About // 關於我</span>
+
+    <div class="about-inline prose">
+        {% capture about_md %}{% include about.md %}{% endcapture %}
+        {{ about_md | markdownify }}
+    </div>
+</section>

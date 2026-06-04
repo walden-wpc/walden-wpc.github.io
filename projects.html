@@ -1,0 +1,37 @@
+---
+layout: default
+permalink: /projects/
+title: Projects
+description: 全部專案列表
+---
+
+<section id="projects">
+    <span class="section-label">Projects // 全部專案</span>
+
+    {% assign all_projects = site.posts | where: "layout", "project" %}
+    {% assign featured = all_projects | where: "featured", true %}
+    {% assign others = all_projects | where_exp: "p", "p.featured != true" %}
+    {% assign ordered = featured | concat: others %}
+
+    <div class="project-grid">
+        {% for project in ordered %}
+        <a href="{{ project.url | relative_url }}" class="project-item">
+            <div class="project-thumb">
+                {% if project.image %}
+                <img src="{{ project.image }}" alt="{{ project.title }}" style="width:100%; height:100%; object-fit:cover; display:block;">
+                {% endif %}
+            </div>
+            <h3 class="project-title">{{ project.title }}</h3>
+            <p class="project-desc">{{ project.description }}</p>
+            <div class="project-card-meta">
+                {% if project.spend %}<span class="project-spend">耗時 {{ project.spend }}</span>{% endif %}
+                {% if project.tags %}
+                <span class="project-tags">
+                    {% for tag in project.tags limit:3 %}{{ tag }}{% unless forloop.last %} · {% endunless %}{% endfor %}
+                </span>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>

@@ -26,6 +26,21 @@
     <link rel="canonical" href="{{ site.url }}{{ page.url }}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="stylesheet" href="/style.css?v={{ site.time | date: '%s' }}">
+
+    <!-- Maple Mono CN：5 秒內載入成功才套用，否則維持替代字體 -->
+    <script>
+        (function () {
+            if (!document.fonts || !document.fonts.load) return;
+            var timeout = new Promise(function (_, reject) { setTimeout(reject, 5000); });
+            Promise.race([document.fonts.load("1em 'Maple Mono CN'"), timeout])
+                .then(function () {
+                    if (document.fonts.check("1em 'Maple Mono CN'")) {
+                        document.documentElement.classList.add('fonts-ready');
+                    }
+                })
+                .catch(function () { /* 超過 5 秒：維持替代字體 */ });
+        })();
+    </script>
     {% if page.math %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
@@ -50,11 +65,13 @@
         <nav class="main-nav">
             <ul>
                 {% if page.url == "/" %}
-                <li><a href="#projects">Projects</a></li>
+                <li><a href="/projects/">Projects</a></li>
+                <li><a href="#about">About</a></li>
                 {% else %}
                 <li><a href="/">← Home</a></li>
+                <li><a href="/projects/">Projects</a></li>
+                <li><a href="/#about">About</a></li>
                 {% endif %}
-                <li><a href="/about/">About</a></li>
             </ul>
         </nav>
     </header>
@@ -87,6 +104,12 @@
             {% endif %}
         </div>
     </footer>
+
+    {% if site.goatcounter %}
+    <!-- 訪客統計 (僅你能在後台檢視) -->
+    <script data-goatcounter="https://{{ site.goatcounter }}.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+    {% endif %}
 
 </body>
 
