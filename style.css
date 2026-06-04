@@ -86,7 +86,7 @@ body {
     -webkit-font-smoothing: antialiased;
     max-width: 960px;
     margin: 0 auto;
-    padding: 0 var(--spacing-sm);
+    padding: 0 24px;
 }
 
 a {
