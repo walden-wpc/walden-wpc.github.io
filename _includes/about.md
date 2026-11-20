@@ -27,10 +27,10 @@
 
 ## International Presentations
 #### 2025
-- **OHBM 2025 Annual Meeting** ｜ Brisbane, Australia <br> (Poster)
+- **OHBM 2025 Annual Meeting** ｜ Brisbane, Australia (Poster)
   國際人類腦圖譜學會 2025年年會（海報發表）
 
-- **ISMRM Workshop: 40 Years of Diffusion** ｜ Kyoto, Japan <br> (**Oral Presentation** and Poster)
+- **ISMRM Workshop: 40 Years of Diffusion** ｜ Kyoto, Japan (**Oral Presentation** and Poster)
   擴散磁振造影研討會（**口頭報告**與海報發表）
 
 ## Skills
@@ -44,4 +44,4 @@
 | 演算法 | Dijkstra, binary min-heap |
 | 資料視覺化 | interactive 3D (Plotly), map visualization (MapLibre), D3.js |
 
-如果你對平面設計或調酒有興趣，也歡迎交流：）
+#### 如果你對平面設計或調酒有興趣，也歡迎交流：）
