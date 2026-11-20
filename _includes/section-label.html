@@ -1,10 +1,20 @@
 {% comment %}
   區塊標題。用法：
     {% include section-label.html en="Projects" zh="實作" %}
-  右側的 .ascii-rule 是首頁水波字元梯度的延伸（純裝飾，螢幕閱讀器會忽略）。
+    {% include section-label.html en="Projects" zh="全部專案" heading=true %}
+
+  heading=true 會把標題包成 <h1>（給本身沒有其他主標的頁面用，例如 /projects/）。
+  右側的 .ascii-rule 是首頁水波字元梯度的延伸，純裝飾，螢幕閱讀器會忽略。
 {% endcomment %}
+{%- capture label_inner -%}
+<span class="section-label-en">{{ include.en }}</span>
+{%- if include.zh %}<span class="section-label-zh">{{ include.zh }}</span>{% endif -%}
+{%- endcapture -%}
 <div class="section-label">
-    <span class="section-label-en">{{ include.en }}</span>
-    {% if include.zh %}<span class="section-label-zh">{{ include.zh }}</span>{% endif %}
+    {%- if include.heading -%}
+    <h1 class="section-label-head">{{ label_inner }}</h1>
+    {%- else -%}
+    {{ label_inner }}
+    {%- endif -%}
     <span class="ascii-rule" aria-hidden="true"></span>
 </div>

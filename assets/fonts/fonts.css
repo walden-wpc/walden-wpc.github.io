@@ -44,3 +44,13 @@
 
 /* 第 3 層（後備分塊）在 fonts-fallback.css，由 <head> 非同步載入 —— 119KB 的
    @font-face 宣告不該卡在首次繪製的關鍵路徑上。 */
+
+/* 彎引號 ' ' " " 在 Noto CJK 系列裡是全形字寬，用在英文上會多出半個字的
+   空隙（Dean' s、" Walden" ）。這裡把這四個字元導回系統的拉丁襯線字體。
+   系統若一個都沒有，這個 family 就不會成立，自然落回 Noto Serif TC。 */
+@font-face {
+    font-family: "Prose Quote";
+    src: local("Georgia"), local("Times New Roman"), local("Hoefler Text"),
+         local("Liberation Serif"), local("DejaVu Serif");
+    unicode-range: U+2018, U+2019, U+201C, U+201D;
+}

@@ -31,8 +31,8 @@
     /* 字體 */
     --font-ui: "Maple Mono", ui-monospace, SFMono-Regular, Consolas,
                "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
-    --font-prose: "Noto Serif TC", "Noto Serif TC Fallback", Georgia,
-                  "Songti TC", "Times New Roman", serif;
+    --font-prose: "Prose Quote", "Noto Serif TC", "Noto Serif TC Fallback",
+                  Georgia, "Songti TC", "Times New Roman", serif;
     --font-code: "Maple Mono", ui-monospace, SFMono-Regular, Consolas,
                  "PingFang TC", "Microsoft JhengHei", monospace;
 
@@ -366,6 +366,15 @@ h1, h2, h3, h4, h5, h6 {
     text-transform: uppercase;
 }
 
+.section-label-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    font: inherit;
+    color: inherit;
+    margin: 0;
+}
+
 .section-label-en,
 .section-label-zh {
     flex: 0 0 auto;
@@ -644,12 +653,13 @@ canvas.ascii-layer {
 }
 
 .prose h3::before {
-    content: "\2593 " / "";
+    content: "\2593" / "";
     font-family: var(--font-code);
-    font-size: 0.6em;
-    vertical-align: 0.22em;
+    font-size: 0.58em;
+    vertical-align: 0.24em;
+    margin-right: 0.7em;
     color: var(--color-ink-faint);
-    opacity: 0.6;
+    opacity: 0.5;
 }
 
 .prose h4 {
@@ -660,14 +670,8 @@ canvas.ascii-layer {
     margin-bottom: 0.4em;
 }
 
-.prose h4::before {
-    content: "\2592 " / "";
-    font-family: var(--font-code);
-    font-size: 0.6em;
-    vertical-align: 0.22em;
-    color: var(--color-ink-faint);
-    opacity: 0.6;
-}
+/* h4 不加字元標記：about.md 用 h4 當「年份 + 單位」的小標，
+   前面掛一個方塊會被當成列表符號，反而是雜訊。 */
 
 .prose blockquote {
     border-left: 2px solid var(--color-rule);
