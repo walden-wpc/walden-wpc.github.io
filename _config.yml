@@ -4,6 +4,13 @@ description: 張文柏的個人網站
 image: /assets/images/walden_card.webp
 url: "https://walden-wpc.github.io"
 
+# 首頁水面上的文字 —— 想改文案改這裡就好
+hero:
+  name_zh: 張文柏
+  name_en: WEN-PO CHANG
+  tagline: 神經科學背景，習慣從複雜的資料裡梳理出架構。現在把這件事帶到醫療與科技的交會處，順手把靈感做成能用的工具。
+  hint: 這片水面是程式即時演算的 — 點一下
+
 # Build settings
 # NO theme: minima — we use our own _layouts/
 future: true

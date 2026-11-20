@@ -1,0 +1,24 @@
+{% comment %}
+  專案卡片。用法：
+    {% include project-card.html project=project hidden=true %}
+  .ascii-layer 由 walden.js 注入：圖片進入視窗時從字元「顯影」成照片。
+{% endcomment %}
+<a href="{{ include.project.url | relative_url }}"
+   class="project-item{% if include.hidden %} project-hidden{% endif %}">
+    <div class="project-thumb" {% if include.project.image %}data-ascii-reveal{% endif %}>
+        {% if include.project.image %}
+        <img src="{{ include.project.image | relative_url }}" alt="{{ include.project.title }}"
+             width="1323" height="744" loading="lazy" decoding="async">
+        {% endif %}
+    </div>
+    <h3 class="project-title">{{ include.project.title }}</h3>
+    <p class="project-desc">{{ include.project.description }}</p>
+    <div class="project-card-meta">
+        {% if include.project.spend %}<span class="project-spend">耗時 {{ include.project.spend }}</span>{% endif %}
+        {% if include.project.tags %}
+        <span class="project-tags">
+            {% for tag in include.project.tags limit:3 %}{{ tag }}{% unless forloop.last %} · {% endunless %}{% endfor %}
+        </span>
+        {% endif %}
+    </div>
+</a>

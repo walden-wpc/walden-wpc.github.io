@@ -1,0 +1,10 @@
+{% comment %}
+  區塊標題。用法：
+    {% include section-label.html en="Projects" zh="實作" %}
+  右側的 .ascii-rule 是首頁水波字元梯度的延伸（純裝飾，螢幕閱讀器會忽略）。
+{% endcomment %}
+<div class="section-label">
+    <span class="section-label-en">{{ include.en }}</span>
+    {% if include.zh %}<span class="section-label-zh">{{ include.zh }}</span>{% endif %}
+    <span class="ascii-rule" aria-hidden="true"></span>
+</div>

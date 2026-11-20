@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant-TW">
 
 <head>
     <meta charset="UTF-8">
@@ -7,40 +7,43 @@
     <meta name="description" content="{{ page.description | default: site.description }}">
     <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
 
+    {% comment %} 分享圖：頁面顯示用 .webp，社群爬蟲用 1200x630 的 -og.jpg
+                  （LinkedIn 的爬蟲對 WebP 支援仍不穩定） {% endcomment %}
+    {% assign og_image = page.image | default: site.image %}
+    {% assign og_share = og_image | replace: '.webp', '-og.jpg' %}
+
     <!-- SEO: Open Graph -->
     <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
     <meta property="og:description" content="{{ page.description | default: site.description }}">
     <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
     <meta property="og:url" content="{{ site.url }}{{ page.url }}">
     <meta property="og:site_name" content="{{ site.title }}">
-    {% assign og_image = page.image | default: site.image %}
-    {% if og_image %}
-    <meta property="og:image" content="{{ site.url }}{{ og_image }}">{% endif %}
+    <meta property="og:locale" content="zh_TW">
+    {% if og_share %}
+    <meta property="og:image" content="{{ site.url }}{{ og_share }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">{% endif %}
 
     <!-- SEO: Twitter Card -->
-    <meta name="twitter:card" content="{% if og_image %}summary_large_image{% else %}summary{% endif %}">
+    <meta name="twitter:card" content="{% if og_share %}summary_large_image{% else %}summary{% endif %}">
     <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
     <meta name="twitter:description" content="{{ page.description | default: site.description }}">
-    {% if og_image %}<meta name="twitter:image" content="{{ site.url }}{{ og_image }}">{% endif %}
+    {% if og_share %}<meta name="twitter:image" content="{{ site.url }}{{ og_share }}">{% endif %}
 
     <link rel="canonical" href="{{ site.url }}{{ page.url }}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    {% feed_meta %}
+
+    {% comment %} 兩個主要字體先行預載，省掉「CSS 下載完才開始抓字體」的來回 {% endcomment %}
+    <link rel="preload" href="/assets/fonts/maple-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/notoseriftc-subset.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/assets/fonts/fonts.css?v={{ site.time | date: '%s' }}">
+    {% comment %} 後備分塊只在子集缺字時才用得到，不必卡住首次繪製 {% endcomment %}
+    <link rel="stylesheet" href="/assets/fonts/fonts-fallback.css?v={{ site.time | date: '%s' }}"
+          media="print" onload="this.media='all'; this.onload=null">
+    <noscript><link rel="stylesheet" href="/assets/fonts/fonts-fallback.css?v={{ site.time | date: '%s' }}"></noscript>
     <link rel="stylesheet" href="/style.css?v={{ site.time | date: '%s' }}">
 
-    <!-- Maple Mono CN：5 秒內載入成功才套用，否則維持替代字體 -->
-    <script>
-        (function () {
-            if (!document.fonts || !document.fonts.load) return;
-            var timeout = new Promise(function (_, reject) { setTimeout(reject, 5000); });
-            Promise.race([document.fonts.load("1em 'Maple Mono CN'"), timeout])
-                .then(function () {
-                    if (document.fonts.check("1em 'Maple Mono CN'")) {
-                        document.documentElement.classList.add('fonts-ready');
-                    }
-                })
-                .catch(function () { /* 超過 5 秒：維持替代字體 */ });
-        })();
-    </script>
     {% if page.math %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
@@ -53,64 +56,58 @@
 </head>
 
 <body>
+    <a class="skip-link" href="#main">跳到主要內容</a>
 
-    <!-- Header -->
     <header class="site-header">
-        <div class="site-identity">
-            <h1 class="site-title"><a href="/">{{ site.title }}</a></h1>
-            {% if site.subtitle %}
-            <p class="site-subtitle">{{ site.subtitle }}</p>
-            {% endif %}
-        </div>
-        <nav class="main-nav">
-            <ul>
-                {% if page.url == "/" %}
-                <li><a href="/projects/">Projects</a></li>
-                <li><a href="#about">About</a></li>
-                {% else %}
-                <li><a href="/">← Home</a></li>
-                <li><a href="/projects/">Projects</a></li>
-                <li><a href="/#about">About</a></li>
+        <div class="wrap">
+            <div class="site-identity">
+                <p class="site-title"><a href="/">{{ site.title }}</a></p>
+                {% if site.subtitle %}
+                <p class="site-subtitle">{{ site.subtitle }}</p>
                 {% endif %}
-            </ul>
-        </nav>
+            </div>
+            <nav class="main-nav" aria-label="主要導覽">
+                <ul>
+                    {% unless page.url == "/" %}
+                    <li><a href="/">← Home</a></li>
+                    {% endunless %}
+                    <li><a href="/projects/" {% if page.url == "/projects/" %}aria-current="page"{% endif %}>Projects</a></li>
+                    <li><a href="{% if page.url == '/' %}#about{% else %}/#about{% endif %}">About</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    {% if page.url == "/" %}
-    <div id="walden-container"></div>
-    <script src="/assets/js/walden.js"></script>
-    {% endif %}
-
-    <main class="article-container">
+    <main id="main">
         {{ content }}
     </main>
 
-    <!-- Footer -->
     <footer class="site-footer">
-        <div class="footer-content">
-            <span>&copy; {{ "now" | date: "%Y" }} {{ site.title }}</span>
-            <span class="separator">/</span>
-            <span>Paper &amp; Ink</span>
-        </div>
-        <div class="footer-social">
-            {% if site.social.linkedin %}
-            <a href="{{ site.social.linkedin }}" target="_blank" class="social-link">LinkedIn</a>
-            {% endif %}
-            {% if site.social.mastodon %}
-            <a href="{{ site.social.mastodon }}" target="_blank" class="social-link">Mastodon</a>
-            {% endif %}
-            {% if site.social.email %}
-            <a href="mailto:{{ site.social.email }}" class="social-link">Email</a>
-            {% endif %}
+        <div class="ascii-shore"></div>
+        <div class="wrap">
+            <div class="footer-bar">
+                <span>&copy; {{ "now" | date: "%Y" }} {{ site.title }} <span aria-hidden="true">/</span> Paper &amp; Ink</span>
+                <div class="footer-social">
+                    {% if site.social.linkedin %}
+                    <a href="{{ site.social.linkedin }}" target="_blank" rel="noopener" class="social-link">LinkedIn</a>
+                    {% endif %}
+                    {% if site.social.mastodon %}
+                    <a href="{{ site.social.mastodon }}" target="_blank" rel="noopener" class="social-link">Mastodon</a>
+                    {% endif %}
+                    {% if site.social.email %}
+                    <a href="mailto:{{ site.social.email }}" class="social-link">Email</a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </footer>
 
+    <script src="/assets/js/walden.js?v={{ site.time | date: '%s' }}" defer></script>
+
     {% if site.goatcounter %}
-    <!-- 訪客統計 (僅你能在後台檢視) -->
     <script data-goatcounter="https://{{ site.goatcounter }}.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
     {% endif %}
-
 </body>
 
 </html>
