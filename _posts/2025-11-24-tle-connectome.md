@@ -8,7 +8,7 @@ liveUrl:
 spend: 2 years
 featured: true
 tags: [Neuroscience, Structural Connectome, Diffusion MRI, Tractography, COMMIT2, Graph Theory, Network-Based Statistics, NBS, ANCOVA, FDR Correction, Permutation Testing, GPU Computing, Python, CuPy, NumPy, bctpy, HCPex Atlas]
-image: /assets/images/master-brain-3d.gif
+image: /assets/images/master-brain-3d.webp
 math: false
 ---
 
@@ -35,7 +35,7 @@ math: false
 
 (對更多結果有興趣歡迎直接聯繫。)
 
-![3D腦圖預覽](/assets/images/master-brain-3d.gif)
+![3D腦圖預覽](/assets/images/master-brain-3d.webp)
 
 ## 技術
 

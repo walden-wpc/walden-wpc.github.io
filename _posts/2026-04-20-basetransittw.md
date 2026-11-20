@@ -8,7 +8,7 @@ githubUrl: https://github.com/walden-wpc/BaseTransitTW
 liveUrl: https://walden-wpc.github.io/BaseTransitTW/
 spend: 15 days
 tags: [Data Visualization, Dijkstra, TDX API, Next.js, MapLibre, Turf.js, Binary Min-Heap, Open Government Data ]
-image: /assets/images/basetransit_mockup_card.png
+image: /assets/images/basetransit_mockup_card.webp
 math: true 
 ---
 
@@ -41,7 +41,7 @@ BaseTransitTW 就是為了填補這個空缺而做的。這個工具的核心是
 	- Binary Min-Heap
 	- TDX API
 
-![介面展示](/assets/images/basetransit_mockup_1.png)
+![介面展示](/assets/images/basetransit_mockup_1.webp)
 
 等時線計算使用 **Dijkstra 演算法** ，並包含候／轉車時間預估，等車的時間也有算進去。也因此跑起來很吃資源，放在主執行緒會讓頁面凍結，所以我把它丟進 Web Worker 獨立處理。計算途中地圖還是可以操作，而且會隨著每五分鐘時間帶逐步更新，不用等全部跑完才看到畫面。
 <details markdown="1">

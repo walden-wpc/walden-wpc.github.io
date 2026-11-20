@@ -7,7 +7,7 @@ githubUrl: https://github.com/walden-wpc
 liveUrl: https://walden-wpc.github.io
 spend: 7 days
 tags: [Jekyll, Three.js, GitHub Pages]
-image: /assets/images/walden_card.png
+image: /assets/images/walden_card.webp
 ---
 
 ## 出發點
