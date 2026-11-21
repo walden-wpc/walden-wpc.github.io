@@ -19,3 +19,6 @@ assets/images/make_brain_gif.py
 
 # VS Code 本機設定 (選擇性，如果不想共享)
 # .vscode/
+
+# 字體來源檔（每個 20MB 以上，不進 repo）
+tools/fontsrc/

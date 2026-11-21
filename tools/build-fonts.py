@@ -19,12 +19,15 @@
 所以「忘記重跑這支程式」不會壞掉，只是會多下載一個分塊。
 想讓它回到最省的狀態，加完內容後跑一次就好：
 
-    python tools/build-fonts.py --maple <MapleMono-CN-Regular.ttf 的路徑> \
-                                --serif <NotoSerifTC[wght].ttf 的路徑>
+    python tools/build-fonts.py
 
-兩個來源字體檔都不在 repo 裡（太大）。需要時再下載：
-  Maple Mono CN : https://github.com/subframe7536/maple-font/releases
-  Noto Serif TC : https://github.com/google/fonts/tree/main/ofl/notoseriftc
+不給參數時，它會去 tools/fontsrc/ 找來源字體（那個資料夾被 .gitignore
+排除，因為每個檔案 20MB 以上）。要放哪些檔案、去哪裡下載，看
+tools/fontsrc/README.md。
+
+也可以自己指定路徑：
+
+    python tools/build-fonts.py --serif /path/GenWanMin2TW-R.otf                                 --serif-bold /path/GenWanMin2TW-SB.otf
 
 需要 pip install fonttools brotli
 """
@@ -94,36 +97,66 @@ def subset(src, out, unicodes, label):
     print(f"  {label:<22} {size:7.1f} KB  -> {out.relative_to(ROOT)}")
 
 
+FONTSRC = ROOT / "tools" / "fontsrc"
+DEFAULTS = {
+    "serif": FONTSRC / "GenWanMin2TW-R.otf",
+    "serif_bold": FONTSRC / "GenWanMin2TW-SB.otf",
+    "maple": FONTSRC / "MapleMono-CN-Regular.ttf",
+}
+
+
+def resolve(given, key):
+    """沒給路徑就用 tools/fontsrc/ 底下的預設檔；找不到就回 None。"""
+    if given:
+        path = pathlib.Path(given)
+        if not path.exists():
+            sys.exit(f"找不到 {path}")
+        return path
+    default = DEFAULTS[key]
+    return default if default.exists() else None
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--maple", help="MapleMono-CN-Regular.ttf")
-    ap.add_argument("--serif", help="GenWanMin2TW-R.otf（內文 400）")
-    ap.add_argument("--serif-bold", dest="serif_bold",
+    ap.add_argument("--maple", nargs="?", const="", help="MapleMono-CN-Regular.ttf")
+    ap.add_argument("--serif", nargs="?", const="", help="GenWanMin2TW-R.otf（內文 400）")
+    ap.add_argument("--serif-bold", dest="serif_bold", nargs="?", const="",
                     help="GenWanMin2TW-SB.otf（內文 700）")
     args = ap.parse_args()
 
-    if not any([args.maple, args.serif, args.serif_bold]):
-        ap.error("至少要給 --maple / --serif / --serif-bold 其中一個")
+    # 完全沒給參數：把 tools/fontsrc/ 裡找得到的通通重建
+    serif = resolve(args.serif, "serif")
+    serif_bold = resolve(args.serif_bold, "serif_bold")
+    maple = resolve(args.maple, "maple")
+
+    if not any([serif, serif_bold, maple]):
+        src = FONTSRC.relative_to(ROOT).as_posix()
+        sys.exit(
+            "找不到任何來源字體。\n\n"
+            f"把字體檔放進 {src}/ 之後再跑一次，\n"
+            f"需要哪些檔案、去哪裡下載寫在 {src}/README.md。\n"
+            "或是自己指定路徑：python tools/build-fonts.py --serif <路徑>"
+        )
 
     fonts_dir = ROOT / "assets" / "fonts"
     fonts_dir.mkdir(parents=True, exist_ok=True)
 
-    if args.serif or args.serif_bold:
+    if serif or serif_bold:
         chars = site_charset()
         cjk = sum(1 for c in chars if "一" <= c <= "鿿")
         print(f"網站用字：{len(chars)} 個（其中漢字 {cjk} 個）")
         codes = ",".join("U+%04X" % ord(c) for c in sorted(chars))
         serif_dir = fonts_dir / "genwanmin2tw"
         serif_dir.mkdir(parents=True, exist_ok=True)
-        if args.serif:
-            subset(pathlib.Path(args.serif),
-                   serif_dir / "genwanmin2tw-400.woff2", codes, "GenWanMin2 TW 400")
-        if args.serif_bold:
-            subset(pathlib.Path(args.serif_bold),
-                   serif_dir / "genwanmin2tw-700.woff2", codes, "GenWanMin2 TW 700")
+        if serif:
+            subset(serif, serif_dir / "genwanmin2tw-400.woff2",
+                   codes, "GenWanMin2 TW 400")
+        if serif_bold:
+            subset(serif_bold, serif_dir / "genwanmin2tw-700.woff2",
+                   codes, "GenWanMin2 TW 700")
 
-    if args.maple:
-        subset(pathlib.Path(args.maple), fonts_dir / "maple-mono-latin.woff2",
+    if maple:
+        subset(maple, fonts_dir / "maple-mono-latin.woff2",
                MAPLE_RANGES, "Maple Mono 拉丁")
 
     print("\n完成。assets/fonts/fonts.css 不需要改，檔名是固定的。")

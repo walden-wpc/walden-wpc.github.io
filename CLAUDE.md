@@ -152,14 +152,15 @@ Windows 上也可以直接雙擊 `publish.bat`，它會跑檢查、把結果列�
 寫了新內容出現新字的時候，`publish.py` 會提醒你。這時候網站**不會破版** ——
 缺的字會落到 Noto Serif TC 的 108 個分塊後備，看得出字形不同但讀得到。
 
-要讓它回到最省、字形也統一的狀態，下載來源字體後跑：
+要讓它回到最省、字形也統一的狀態：
 
 ```bash
-python tools/build-fonts.py --serif GenWanMin2TW-R.otf --serif-bold GenWanMin2TW-SB.otf
+python tools/build-fonts.py
 ```
 
-來源字體不在 repo 裡（每個 21MB）。從
-<https://github.com/ButTaiwan/genwan-font/releases> 下載 `GenWanMin2TW-otf.zip`。
+來源字體（每個 21MB）放在 `tools/fontsrc/`，那個資料夾被 `.gitignore` 排除。
+換電腦或清掉之後要重新下載，需要哪些檔案寫在 `tools/fontsrc/README.md`。
+下載點：<https://github.com/ButTaiwan/genwan-font/releases> 的 `GenWanMin2TW-otf.zip`。
 
 ---
 
