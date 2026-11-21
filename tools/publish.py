@@ -361,8 +361,11 @@ def main():
 
     check_front_matter()
     check_images()
-    check_font_coverage()
     ok = build() if not problems else False
+    # 字體檢查要在 build 之後：它看的是 _site 裡真正被渲染出來的字，
+    # 跑在 build 之前會讀到上一次的輸出。
+    if ok:
+        check_font_coverage()
 
     print("=" * 60)
     for n in notes:

@@ -7,7 +7,8 @@ description: 瀏覽器中算出全台公車等時路網，零後端、完全免�
 githubUrl: https://github.com/walden-wpc/BaseTransitTW
 liveUrl: https://walden-wpc.github.io/BaseTransitTW/
 spend: 15 days
-tags: [Data Visualization, Dijkstra, TDX API, Next.js, MapLibre, Turf.js, Binary Min-Heap, Open Government Data ]
+# 最多 6 個；前 3 個就是卡片上會顯示的那 3 個
+tags: [Dijkstra, MapLibre, Next.js, Data Visualization, TDX API, Turf.js]
 image: /assets/images/basetransit_mockup_card.webp
 math: true 
 ---

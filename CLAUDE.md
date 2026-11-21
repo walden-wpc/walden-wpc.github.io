@@ -225,6 +225,10 @@ python tools/publish.py --push -m "你自己的訊息"
 python tools/build-fonts.py
 ```
 
+它看的是 `_site` 裡**真正被渲染出來的字**，不是原始碼 —— 所以註解、
+YAML 鍵名、Liquid 標籤裡的字不會被算進去。也因此**先跑過一次
+`bundle exec jekyll build` 才會最準**（`publish.py` 會自動按這個順序跑）。
+
 來源字體（每個 21MB）放在 `tools/fontsrc/`，那個資料夾被 `.gitignore` 排除。
 換電腦或清掉之後要重新下載，需要哪些檔案寫在 `tools/fontsrc/README.md`。
 下載點：<https://github.com/ButTaiwan/genwan-font/releases> 的 `GenWanMin2TW-otf.zip`。

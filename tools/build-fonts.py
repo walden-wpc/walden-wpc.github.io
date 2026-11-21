@@ -32,7 +32,9 @@ tools/fontsrc/README.md。
 需要 pip install fonttools brotli
 """
 import argparse
+import html
 import pathlib
+import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -63,10 +65,37 @@ MAPLE_RANGES = (
 )
 
 
-def content_charset():
-    """內容檔案裡真正出現過的字元。publish.py 的字體覆蓋檢查用這個 ——
-    用 site_charset() 會把 ALWAYS 裡的保留碼位（例如 U+FF00）也算進去，
-    那些字元字體本來就沒有字形，會變成假警報。"""
+def rendered_charset():
+    """從建好的 _site 取出「真正會被畫到畫面上」的字。
+
+    掃原始碼會連註解、YAML 鍵名、Liquid 標籤裡的字一起算進去。那些字
+    永遠不會出現在畫面上，白白撐大字體子集，也會讓「缺字」警告變成
+    假警報（例如寫在註解裡的字被報成缺字）。
+
+    _site 還沒建出來時回 None，由呼叫端退回掃原始碼。
+    """
+    site = ROOT / "_site"
+    if not site.is_dir():
+        return None
+    chars = set()
+    found = False
+    for page in site.rglob("*.html"):
+        found = True
+        try:
+            text = page.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        text = re.sub(r"<(script|style)\b.*?</\1\s*>", " ", text,
+                      flags=re.S | re.I)
+        text = re.sub(r"<[^>]*>", " ", text)
+        chars |= set(html.unescape(text))
+    if not found:
+        return None
+    return {c for c in chars if ord(c) > 0x1F}
+
+
+def source_charset():
+    """退路：直接掃原始檔。沒有 _site 可用時才會走這條。"""
     chars = set()
     for pattern in CONTENT_GLOBS:
         for path in ROOT.glob(pattern):
@@ -75,6 +104,17 @@ def content_charset():
             except (UnicodeDecodeError, OSError):
                 continue
     return {c for c in chars if ord(c) > 0x1F}
+
+
+def content_charset():
+    """畫面上真正用到的字元。publish.py 的字體覆蓋檢查也用這個 ——
+    用 site_charset() 會把 ALWAYS 裡的保留碼位（例如 U+FF00）也算進去，
+    那些字元字體本來就沒有字形，會變成假警報。"""
+    rendered = rendered_charset()
+    if rendered is not None:
+        return rendered
+    print("（找不到 _site，改用掃原始碼的方式；跑過 jekyll build 會更準）")
+    return source_charset()
 
 
 def site_charset():

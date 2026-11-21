@@ -7,7 +7,8 @@ githubUrl:
 liveUrl: 
 started: 2023          # 研究起點。這是從 about.md 的「2023–2025 NYCU」推出來的，不對請改
 featured: true
-tags: [Neuroscience, Structural Connectome, Diffusion MRI, Tractography, COMMIT2, Graph Theory, Network-Based Statistics, NBS, ANCOVA, FDR Correction, Permutation Testing, GPU Computing, Python, CuPy, NumPy, bctpy, HCPex Atlas]
+# 最多 6 個；前 3 個就是卡片上會顯示的那 3 個
+tags: [Diffusion MRI, Structural Connectome, Tractography, COMMIT2, Graph Theory, Network-Based Statistics]
 image: /assets/images/master-brain-3d.webp
 math: false
 ---
