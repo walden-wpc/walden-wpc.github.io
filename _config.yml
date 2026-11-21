@@ -44,9 +44,12 @@ ui:
 
   # 專案頁上方那塊資訊的欄位標籤
   label_about: About
-  label_time: Time
-  label_build: Build
+  label_time: Time              # 期間：這個專案活了多久
+  label_build: Build            # 投入：做出第一個能用的版本花了多久
   label_tags: Tags
+  build_prefix: 第一版           # 顯示成「第一版 15 days」
+  still_updating: 持續更新
+  card_updated_suffix: 更新      # 卡片上顯示成「2026.11 更新」
 
 # 專案是 collection，不是 _posts。
 # 原因：專案不是「有日期的文章」，放在 _posts 會被迫吃到 /2026/04/20/xxx.html

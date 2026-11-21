@@ -43,8 +43,11 @@ layout: project
 title: {title}
 date: {date}
 description:          # 一句話，會出現在卡片上與分享卡片的描述
-spend:                # 例如 3 days / 2 years
-tags: []              # 例如 [Vanilla JS, D3.js]
+spend:                # 選填。做出「第一個能用的版本」花了多久，例如 3 days
+                      # 研究型／長期專案不要填這個，改填 started
+started:              # 選填。專案起點，例如 2023。顯示成「2023 – 2025.11」
+updated:              # 選填。最後一次實質更新，例如 2026.11
+tags: []              # 最多 6 個，例如 [Vanilla JS, D3.js]
 image:                # /assets/images/xxx.webp，卡片縮圖與分享圖都用這張
 githubUrl:
 liveUrl:

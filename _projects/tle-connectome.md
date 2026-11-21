@@ -5,7 +5,7 @@ date: 2025-11-24
 description: 用 MRI 資料重建大腦網路，找出癲癇與正常人的腦結構差異
 githubUrl: 
 liveUrl: 
-spend: 2 years
+started: 2023          # 研究起點。這是從 about.md 的「2023–2025 NYCU」推出來的，不對請改
 featured: true
 tags: [Neuroscience, Structural Connectome, Diffusion MRI, Tractography, COMMIT2, Graph Theory, Network-Based Statistics, NBS, ANCOVA, FDR Correction, Permutation Testing, GPU Computing, Python, CuPy, NumPy, bctpy, HCPex Atlas]
 image: /assets/images/master-brain-3d.webp
