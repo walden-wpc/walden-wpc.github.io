@@ -149,10 +149,14 @@ h1, h2, h3, h4, h5, h6 {
     margin-inline: 0 auto;
 }
 
+/* 平常完全不佔版面（不用 left:-9999px，那會影響捲動寬度的計算） */
 .skip-link {
     position: absolute;
-    left: -9999px;
-    top: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
     z-index: 100;
     background: var(--color-ink);
     color: var(--color-bg);
@@ -161,6 +165,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .skip-link:focus {
+    width: auto;
+    height: auto;
+    clip-path: none;
     left: var(--gutter);
     top: 10px;
 }
@@ -273,6 +280,9 @@ h1, h2, h3, h4, h5, h6 {
    =================================== */
 .hero {
     position: relative;
+    /* .hero-inner::before（紙的光暈）用負 inset 往兩側各撐出 14%，
+       沒有裁切的話會把頁面撐寬、產生水平捲動。 */
+    overflow: hidden;
     margin-bottom: var(--space-section);
 }
 
@@ -453,7 +463,9 @@ main > .article-container:first-child {
    =================================== */
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr));
+    /* 310 而不是 330：768px 平板直向的可用寬度是 676，
+       2×330+24(gap) = 684 剛好差 8px 排不下，會掉成一大欄。 */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr));
     gap: var(--space-lg) var(--space-md);
 }
 
@@ -862,11 +874,6 @@ canvas.ascii-layer {
     color: var(--color-ink-soft);
 }
 
-.table-scroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
 .prose details {
     border-left: 2px solid var(--color-rule-soft);
     padding: var(--space-sm) var(--space-md);
@@ -991,7 +998,16 @@ canvas.ascii-layer {
         gap: var(--space-2xs);
     }
 
-    /* 窄螢幕沒有左右空間讓水，所以把水域移到文字下方的一帶 */
+}
+
+/* ===================================
+   平板與窄螢幕的水面
+   -----------------------------------
+   桌機是「文字在左、水在右」。但那套要到 820px 以上才夠寬 ——
+   768px 平板直向時文字就佔掉 544px，右邊只剩一百多 px，水會被擠到看不見。
+   所以 820px 以下改成「水域在文字下方」。
+   =================================== */
+@media (max-width: 820px) {
     .hero-canvas {
         -webkit-mask-image: linear-gradient(to bottom, transparent 8%, rgba(0, 0, 0, 0.25) 34%, #000 62%, #000 100%);
         mask-image: linear-gradient(to bottom, transparent 8%, rgba(0, 0, 0, 0.25) 34%, #000 62%, #000 100%);
@@ -1007,6 +1023,59 @@ canvas.ascii-layer {
         background: radial-gradient(88% 60% at 50% 44%,
                 var(--color-bg) 46%,
                 rgba(250, 249, 246, 0) 100%);
+    }
+}
+
+/* ===================================
+   表格在窄螢幕
+   -----------------------------------
+   技能表這種「標籤 → 內容」的兩欄表，硬塞進 375px 會把中文擠成
+   「資料分/析/統/計」。改成上下堆疊，比橫向捲動好讀得多。
+   欄數不是 2 的表格由 walden.js 包進 .table-scroll 橫向捲動。
+   =================================== */
+.table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: var(--space-md) 0;
+}
+
+.table-scroll table {
+    margin: 0;
+}
+
+@media (max-width: 560px) {
+    .prose table.table-pair,
+    .prose table.table-pair tbody,
+    .prose table.table-pair tr,
+    .prose table.table-pair td {
+        display: block;
+        width: 100%;
+    }
+
+    .prose table.table-pair {
+        border-top: 1px solid var(--color-rule);
+    }
+
+    .prose table.table-pair thead {
+        display: none;
+    }
+
+    .prose table.table-pair tr {
+        border-bottom: 1px solid var(--color-rule);
+        padding: var(--space-sm) 0;
+    }
+
+    .prose table.table-pair td {
+        border: none;
+        padding: 0;
+    }
+
+    /* 第一欄是標籤：用人的聲音，小一點、淡一點 */
+    .prose table.table-pair td:first-child {
+        font-family: var(--font-prose);
+        color: var(--color-ink-faint);
+        letter-spacing: 0.04em;
+        margin-bottom: 3px;
     }
 }
 

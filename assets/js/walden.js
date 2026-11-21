@@ -375,6 +375,32 @@
         });
     }
 
+    /* =============================================================
+       3. 表格在窄螢幕
+       -------------------------------------------------------------
+       markdown 寫出來的表格沒辦法在原始碼裡加 class 或外層容器，
+       所以在這裡分流：
+         兩欄（標籤 -> 內容）  -> .table-pair，窄螢幕改成上下堆疊
+         其他欄數             -> 包一層 .table-scroll 橫向捲動
+       ============================================================= */
+    function tables() {
+        var list = document.querySelectorAll('.prose table');
+        for (var i = 0; i < list.length; i++) {
+            var t = list[i];
+            var cols = t.rows && t.rows[0] ? t.rows[0].cells.length : 0;
+            if (cols === 2) {
+                t.classList.add('table-pair');
+                continue;
+            }
+            if (t.parentElement &&
+                t.parentElement.classList.contains('table-scroll')) continue;
+            var wrap = document.createElement('div');
+            wrap.className = 'table-scroll';
+            t.parentNode.insertBefore(wrap, t);
+            wrap.appendChild(t);
+        }
+    }
+
     /* ============================================================= */
     function init() {
         var host = document.getElementById('walden-canvas');
@@ -382,6 +408,8 @@
 
         var targets = document.querySelectorAll('[data-ascii-reveal]');
         for (var i = 0; i < targets.length; i++) reveal(targets[i]);
+
+        tables();
     }
 
     if (document.readyState === 'loading') {
