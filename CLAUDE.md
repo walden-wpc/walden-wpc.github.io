@@ -275,5 +275,7 @@ git checkout main && git reset --hard backup-live-20261121 && git push --force o
 ## 環境
 
 - Ruby + Jekyll 4.3（`bundle exec jekyll serve` 預覽，預設 <http://localhost:4000>）
+- **改 `_config.yml` 之後要重啟 serve**（Ctrl+C 再跑一次）。Jekyll 不監看
+  設定檔，光重新整理瀏覽器看不到變化。其他檔案都會自動重建。
 - Python 3：`pip install pillow fonttools brotli`（轉圖與字體子集化用）
 - 本機 git 身分設在 repo 內（沒有全域 `.gitconfig`）
