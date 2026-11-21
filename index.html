@@ -12,9 +12,12 @@ layout: default
                 <span class="hero-name-en">{{ site.hero.name_en }}</span>
             </h1>
             <p class="hero-tagline">{{ site.hero.tagline }}</p>
-            {% if site.hero.hint %}
-            <p class="hero-hint">// {{ site.hero.hint }}</p>
-            {% endif %}
+            {% comment %}
+              可互動的提示：一顆墨點週期性地盪出兩圈虛線漣漪。
+              不用文字說明，讓它自己示範。.hero-inner 是 pointer-events: none，
+              所以點在這個圖示上會直接穿透到水面，就地激起一圈真的漣漪。
+            {% endcomment %}
+            <span class="hero-cue" role="img" aria-label="水面可以點擊互動"></span>
         </div>
     </div>
 </section>

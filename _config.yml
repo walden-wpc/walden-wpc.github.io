@@ -9,7 +9,7 @@ hero:
   name_zh: 張文柏
   name_en: WEN-PO CHANG
   tagline: 神經科學背景，習慣從複雜的資料裡梳理出架構。現在把這件事帶到醫療與科技的交會處，順手把靈感做成能用的工具。
-  hint: 這片水面是程式即時演算的 — 點一下
+  # 「可以點擊」的提示不用文字，是 style.css 裡的 .hero-cue（一圈一圈盪開的墨點）
 
 # Build settings
 # NO theme: minima — we use our own _layouts/
