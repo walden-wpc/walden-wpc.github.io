@@ -159,7 +159,26 @@ python tools/publish.py
 python tools/publish.py --push
 ```
 
-Windows 上也可以直接雙擊 `publish.bat`，它會跑檢查、把結果列出來、問你要不要上線。
+Windows 上也可以直接雙擊 `publish.bat`（跑的是 `--interactive`：
+檢查一次、列出結果、當場問要不要上線）。
+
+### commit 訊息
+
+不給 `-m` 的話，`publish.py` 會**依實際變更的檔案自動生一句有內容的訊息**，
+例如：
+
+    content: 新增札記「等時線這個概念，其實是一種同理心」
+    content: 更新專案「BaseTransitTW」，調整版型
+    chore: 調整工具與說明
+
+不會出現「更新內容 2026-11-21」這種等於沒說的訊息（日期本來就記在 commit 裡）。
+在終端機裡它還會讓你按 Enter 接受或當場改寫。要直接指定就：
+
+```bash
+python tools/publish.py --push -m "你自己的訊息"
+```
+
+自己手動 commit 時訊息一樣要寫清楚「改了什麼」，中文完全沒問題。
 
 ---
 

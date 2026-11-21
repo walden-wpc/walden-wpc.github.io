@@ -236,8 +236,91 @@ def git(*args, capture=True):
 
 
 def changed_files():
-    r = git("status", "--porcelain")
+    # -uall：未追蹤的資料夾預設會被收合成一行（?? _posts/），
+    # 加上它才看得到裡面每一個檔案。
+    r = git("status", "--porcelain", "-uall")
     return [line[3:] for line in r.stdout.splitlines() if line.strip()]
+
+
+def changed_entries():
+    """(狀態碼, 路徑) 的清單。狀態碼 A/?? 代表新增，M 代表修改。"""
+    r = git("status", "--porcelain", "-uall")
+    out = []
+    for line in r.stdout.splitlines():
+        if not line.strip():
+            continue
+        out.append((line[:2].strip(), line[3:].strip().strip('"')))
+    return out
+
+
+def title_of(rel):
+    """讀出某篇內容的 title，讀不到就用檔名。"""
+    path = ROOT / rel
+    if not path.exists():
+        return pathlib.Path(rel).stem
+    data, _ = read_front_matter(path)
+    return (data or {}).get("title") or pathlib.Path(rel).stem
+
+
+def suggest_message():
+    """從實際變更的檔案生一句有內容的 commit 訊息。
+
+    「content: 更新內容 2026-11-21」這種訊息等於什麼都沒說 —— 日期本來就
+    記在 commit 裡了。這裡改成講清楚動了什麼：哪一篇札記、哪一個專案。
+    """
+    new_notes, upd_notes, new_proj, upd_proj = [], [], [], []
+    other = set()
+
+    for code, rel in changed_entries():
+        rel = rel.replace("\\", "/")
+        is_new = code in ("A", "??")
+        if rel.startswith("_posts/") and rel.endswith(".md"):
+            (new_notes if is_new else upd_notes).append(title_of(rel))
+        elif rel.startswith("_projects/") and rel.endswith(".md"):
+            (new_proj if is_new else upd_proj).append(title_of(rel))
+        elif rel == "_includes/about.md":
+            other.add("關於我")
+        elif rel.startswith("assets/images/"):
+            other.add("圖片")
+        elif rel.startswith("assets/fonts/"):
+            other.add("字體子集")
+        elif rel in ("style.css", "_config.yml") or rel.startswith(("_layouts/", "_includes/")):
+            other.add("版型")
+        elif rel.startswith("assets/js/"):
+            other.add("互動")
+        elif rel.startswith("tools/") or rel in ("CLAUDE.md", "publish.bat", ".gitignore"):
+            other.add("工具與說明")
+
+    def quote(titles, limit=2):
+        shown = "、".join(f"「{t}」" for t in titles[:limit])
+        if len(titles) > limit:
+            shown += f" 等 {len(titles)} 篇"
+        return shown
+
+    parts = []
+    if new_notes:
+        parts.append(f"新增札記{quote(new_notes)}")
+    if upd_notes:
+        parts.append(f"更新札記{quote(upd_notes)}")
+    if new_proj:
+        parts.append(f"新增專案{quote(new_proj)}")
+    if upd_proj:
+        parts.append(f"更新專案{quote(upd_proj)}")
+    for name in ("關於我", "圖片", "互動", "版型", "字體子集", "工具與說明"):
+        if name in other:
+            parts.append(f"更新{name}" if name in ("關於我", "圖片") else f"調整{name}")
+
+    if not parts:
+        return "chore: 零星調整"
+
+    if new_notes or upd_notes or new_proj or upd_proj or "關於我" in other:
+        prefix = "content"
+    elif other & {"版型", "互動", "圖片"}:
+        prefix = "style"
+    else:
+        prefix = "chore"
+
+    return f"{prefix}: " + "，".join(parts[:3])
 
 
 def do_push(message):
@@ -264,7 +347,13 @@ def main():
                     help="把 _drafts/<SLUG>.md 推進 _posts，或用 all 推全部")
     ap.add_argument("--push", action="store_true",
                     help="檢查都通過之後，commit 並推上 GitHub（真的上線）")
-    ap.add_argument("-m", "--message", help="commit 訊息")
+    ap.add_argument("-m", "--message",
+                    help="commit 訊息。不給的話會依實際變更自動生一句，"
+                         "在終端機裡還會讓你改寫")
+    ap.add_argument("-y", "--yes", action="store_true",
+                    help="不要問，直接用自動生成的 commit 訊息")
+    ap.add_argument("-i", "--interactive", action="store_true",
+                    help="檢查完當場問要不要上線（publish.bat 用的就是這個）")
     args = ap.parse_args()
 
     if args.promote:
@@ -305,12 +394,40 @@ def main():
         print(f"    …還有 {len(files) - 30} 個")
     print()
 
-    if args.push:
-        msg = args.message or f"content: 更新內容 {datetime.date.today().isoformat()}"
-        do_push(msg)
-    else:
+    msg = args.message or suggest_message()
+    print(f"commit 訊息：{msg}\n")
+
+    # --interactive（publish.bat 用）：檢查只跑一次，當場問要不要上線
+    if not args.push and args.interactive and sys.stdin.isatty():
+        try:
+            ans = input("要發布上線嗎？(y/N) ").strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            ans = ""
+        print()
+        if ans != "y":
+            print("沒有發布，git 完全沒動。")
+            return
+        args.push = True
+
+    if not args.push:
         print("沒有動 git。確認上面的清單沒問題之後：\n")
         print("    python tools/publish.py --push")
+        print("\n想自己寫 commit 訊息就加 -m：\n")
+        print('    python tools/publish.py --push -m "你的訊息"')
+        return
+
+    # 在真的終端機裡（例如雙擊 publish.bat）給一次改寫的機會。
+    # 被程式呼叫時 stdin 不是 tty，就直接用上面那句，不會卡住。
+    if not args.message and not args.yes and sys.stdin.isatty():
+        try:
+            typed = input("直接按 Enter 用上面這句，或在這裡改寫：\n> ").strip()
+        except (EOFError, KeyboardInterrupt):
+            typed = ""
+        if typed:
+            msg = typed
+        print()
+
+    do_push(msg)
 
 
 if __name__ == "__main__":
