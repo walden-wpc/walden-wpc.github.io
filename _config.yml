@@ -11,6 +11,15 @@ hero:
   tagline: 神經科學背景，習慣從複雜的資料裡梳理出架構。現在把這件事帶到醫療與科技的交會處，順手把靈感做成能用的工具。
   # 「可以點擊」的提示不用文字，是 style.css 裡的 .hero-cue（一圈一圈盪開的墨點）
 
+# 專案是 collection，不是 _posts。
+# 原因：專案不是「有日期的文章」，放在 _posts 會被迫吃到 /2026/04/20/xxx.html
+# 這種日期網址，而且每個列表頁都得寫 where: "layout","project" 來過濾。
+# _posts 留給之後真正的文章／筆記。
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
 # Build settings
 # NO theme: minima — we use our own _layouts/
 future: true

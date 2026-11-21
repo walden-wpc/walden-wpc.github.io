@@ -27,8 +27,9 @@ layout: default
     <div class="wrap">
         {% include section-label.html en="Projects" zh="實作" %}
 
-        {% comment %} site.posts 已預設依日期新→舊排序；featured 置頂，其餘依日期 {% endcomment %}
-        {% assign all_projects = site.posts | where: "layout", "project" %}
+        {% comment %} collection 預設依檔名排序，所以這裡自己依日期新→舊排；
+                      featured 置頂，其餘依日期 {% endcomment %}
+        {% assign all_projects = site.projects | sort: "date" | reverse %}
         {% assign featured = all_projects | where: "featured", true %}
         {% assign others = all_projects | where_exp: "p", "p.featured != true" %}
         {% assign ordered = featured | concat: others %}

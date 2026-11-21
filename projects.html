@@ -9,7 +9,7 @@ description: 全部專案列表
     <div class="wrap">
         {% include section-label.html en="Projects" zh="全部專案" heading=true %}
 
-        {% assign all_projects = site.posts | where: "layout", "project" %}
+        {% assign all_projects = site.projects | sort: "date" | reverse %}
         {% assign featured = all_projects | where: "featured", true %}
         {% assign others = all_projects | where_exp: "p", "p.featured != true" %}
         {% assign ordered = featured | concat: others %}
