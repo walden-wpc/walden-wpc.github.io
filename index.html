@@ -49,11 +49,27 @@ layout: default
     </div>
 </section>
 
-<!-- 2. About -->
+<!-- 2. Notes（最近 3 篇；還沒有札記時整個區塊不出現） -->
+{% if site.posts.size > 0 %}
+<section class="page-section" id="notes">
+    <div class="wrap">
+        <div class="measure measure--flush">
+            {% include section-label.html en="Notes" zh="札記" %}
+            {% assign recent = site.posts | slice: 0, 3 %}
+            {% include note-list.html notes=recent %}
+            {% if site.posts.size > 3 %}
+            <a href="/notes/" class="show-more-btn">查看全部札記 →</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- 3. About -->
 <section class="page-section" id="about">
     <div class="wrap">
         {% comment %} 標題與內文共用同一條 measure，左邊界才會對齊 {% endcomment %}
-        <div class="measure">
+        <div class="measure measure--flush">
             {% include section-label.html en="About" zh="關於我" %}
 
             <div class="about-inline prose">

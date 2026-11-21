@@ -72,6 +72,9 @@
                     <li><a href="/">← Home</a></li>
                     {% endunless %}
                     <li><a href="/projects/" {% if page.url == "/projects/" %}aria-current="page"{% endif %}>Projects</a></li>
+                    {% if site.posts.size > 0 %}
+                    <li><a href="/notes/" {% if page.url == "/notes/" %}aria-current="page"{% endif %}>Notes</a></li>
+                    {% endif %}
                     <li><a href="{% if page.url == '/' %}#about{% else %}/#about{% endif %}">About</a></li>
                 </ul>
             </nav>

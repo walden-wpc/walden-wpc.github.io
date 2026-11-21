@@ -132,10 +132,16 @@ h1, h2, h3, h4, h5, h6 {
     padding-inline: var(--gutter);
 }
 
-/* 閱讀欄：在 .wrap 內再收窄 */
+/* 閱讀欄：在 .wrap 內再收窄。
+   文章頁置中（整頁只有這一欄，置中最好讀）；
+   首頁用 --flush 靠左，才能和上方的專案格線切齊同一條左線。 */
 .measure {
     max-width: var(--measure);
     margin-inline: auto;
+}
+
+.measure--flush {
+    margin-inline: 0 auto;
 }
 
 .skip-link {
@@ -394,6 +400,13 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: var(--space-section);
 }
 
+/* 列表頁／文章頁的第一個區塊要和 header 拉開距離；
+   首頁的 .hero 不是 .page-section，所以不受影響（刻意貼著 header） */
+main > .page-section:first-child,
+main > .article-container:first-child {
+    padding-top: var(--space-lg);
+}
+
 .page-section:last-child {
     margin-bottom: var(--space-lg);
 }
@@ -517,6 +530,76 @@ canvas.ascii-layer {
     border-color: var(--color-ink);
     background: var(--color-ink);
     color: var(--color-bg);
+}
+
+/* ===================================
+   Notes（札記列表）
+   -----------------------------------
+   刻意不做成卡片：卡片是給專案的（有畫面要看），
+   札記是文字，用編輯式清單。日期走機器的聲音，標題走人的聲音。
+   =================================== */
+.note-list {
+    list-style: none;
+    border-top: 1px solid var(--color-rule-soft);
+}
+
+.note-item {
+    border-bottom: 1px solid var(--color-rule-soft);
+}
+
+.note-link {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    gap: var(--space-sm);
+    align-items: baseline;
+    padding: var(--space-md) 0;
+    border-bottom: none;
+}
+
+.note-date {
+    font-family: var(--font-ui);
+    font-size: var(--step--1);
+    letter-spacing: 0.06em;
+    color: var(--color-ink-faint);
+}
+
+.note-text {
+    display: block;
+}
+
+.note-title {
+    display: block;
+    font-family: var(--font-prose);
+    font-size: var(--step-2);
+    line-height: 1.45;
+    transition: color 0.2s ease;
+}
+
+.note-subtitle {
+    display: block;
+    font-family: var(--font-prose);
+    font-size: var(--step-0);
+    line-height: 1.7;
+    color: var(--color-ink-soft);
+    margin-top: var(--space-2xs);
+}
+
+.note-link:hover .note-title {
+    color: var(--color-ink-soft);
+}
+
+.empty-note {
+    font-family: var(--font-prose);
+    color: var(--color-ink-faint);
+    padding: var(--space-md) 0;
+}
+
+.article-subtitle {
+    font-family: var(--font-prose);
+    font-size: var(--step-1);
+    line-height: 1.75;
+    color: var(--color-ink-soft);
+    margin-top: calc(var(--space-sm) * -0.5);
 }
 
 /* ===================================
@@ -896,6 +979,11 @@ canvas.ascii-layer {
     .project-info-row {
         grid-template-columns: 1fr;
         gap: 2px;
+    }
+
+    .note-link {
+        grid-template-columns: 1fr;
+        gap: var(--space-2xs);
     }
 
     /* 窄螢幕沒有左右空間讓水，所以把水域移到文字下方的一帶 */

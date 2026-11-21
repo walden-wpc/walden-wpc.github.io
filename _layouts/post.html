@@ -2,13 +2,22 @@
 layout: default
 ---
 {% assign post_date = page.date | date: "%Y.%m.%d" %}
-{% assign post_cat = page.category | default: "Note" %}
 <article class="wrap article-container">
     <div class="measure">
         <header class="article-header">
-            {% include section-label.html en=post_cat zh=post_date %}
+            {% include section-label.html en="Notes" zh=post_date %}
             <h1 class="article-title">{{ page.title }}</h1>
+            {% if page.subtitle %}
+            <p class="article-subtitle">{{ page.subtitle }}</p>
+            {% endif %}
         </header>
+
+        {% if page.image %}
+        <div class="project-media" data-ascii-reveal>
+            <img src="{{ page.image | relative_url }}" alt="{{ page.image_alt | default: page.title }}"
+                 width="1323" height="744" decoding="async">
+        </div>
+        {% endif %}
 
         <div class="prose">
             {{ content }}

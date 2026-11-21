@@ -1,0 +1,22 @@
+{% comment %}
+  札記列表。用法：
+    {% include note-list.html notes=site.posts %}
+    {% include note-list.html notes=recent %}
+
+  刻意不用卡片：卡片是給專案的（專案有畫面要看），
+  札記是文字，用編輯式的清單 —— 日期走機器的聲音（mono），
+  標題走人的聲音（襯線）。
+{% endcomment %}
+<ul class="note-list">
+    {% for note in include.notes %}
+    <li class="note-item">
+        <a href="{{ note.url | relative_url }}" class="note-link">
+            <time class="note-date" datetime="{{ note.date | date_to_xmlschema }}">{{ note.date | date: "%Y.%m.%d" }}</time>
+            <span class="note-text">
+                <span class="note-title">{{ note.title }}</span>
+                {% if note.subtitle %}<span class="note-subtitle">{{ note.subtitle }}</span>{% endif %}
+            </span>
+        </a>
+    </li>
+    {% endfor %}
+</ul>

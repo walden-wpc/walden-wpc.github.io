@@ -20,6 +20,10 @@ collections:
     output: true
     permalink: /projects/:name/
 
+# 札記（_posts）的網址：/notes/<標題slug>/
+# 預設是 /2026/11/18/標題.html，日期塞在網址裡不好讀也不好分享
+permalink: /notes/:title/
+
 # Build settings
 # NO theme: minima — we use our own _layouts/
 future: true

@@ -34,9 +34,11 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-# 掃描這些檔案，取出網站實際用到的字
+# 掃描這些檔案，取出網站實際用到的字。
+# _drafts 也掃：這樣草稿發布的當下不需要再重建一次字體。
 CONTENT_GLOBS = [
-    "_posts/*.md", "_includes/*.md", "_includes/*.html",
+    "_projects/*.md", "_posts/*.md", "_drafts/*.md",
+    "_includes/*.md", "_includes/*.html",
     "_layouts/*.html", "*.html", "_config.yml",
 ]
 
@@ -58,7 +60,10 @@ MAPLE_RANGES = (
 )
 
 
-def site_charset():
+def content_charset():
+    """內容檔案裡真正出現過的字元。publish.py 的字體覆蓋檢查用這個 ——
+    用 site_charset() 會把 ALWAYS 裡的保留碼位（例如 U+FF00）也算進去，
+    那些字元字體本來就沒有字形，會變成假警報。"""
     chars = set()
     for pattern in CONTENT_GLOBS:
         for path in ROOT.glob(pattern):
@@ -66,8 +71,12 @@ def site_charset():
                 chars |= set(path.read_text(encoding="utf-8"))
             except (UnicodeDecodeError, OSError):
                 continue
-    chars |= {chr(c) for c in ALWAYS}
     return {c for c in chars if ord(c) > 0x1F}
+
+
+def site_charset():
+    """子集化要收的字 = 內容用到的字 + 一定要有的範圍。"""
+    return content_charset() | {chr(c) for c in ALWAYS}
 
 
 def subset(src, out, unicodes, label):
