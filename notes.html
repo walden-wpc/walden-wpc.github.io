@@ -8,12 +8,12 @@ description: 札記 —— 讀到的、想到的、做到一半的
 <section class="page-section" id="notes">
     <div class="wrap">
         <div class="measure">
-            {% include section-label.html en="Notes" zh="札記" heading=true %}
+            {% include section-label.html en=site.ui.notes_en zh=site.ui.notes_zh heading=true %}
 
             {% if site.posts.size > 0 %}
             {% include note-list.html notes=site.posts %}
             {% else %}
-            <p class="empty-note">還沒有札記。</p>
+            <p class="empty-note">{{ site.ui.notes_empty }}</p>
             {% endif %}
         </div>
     </div>

@@ -56,7 +56,7 @@
 </head>
 
 <body>
-    <a class="skip-link" href="#main">跳到主要內容</a>
+    <a class="skip-link" href="#main">{{ site.ui.skip_link }}</a>
 
     <header class="site-header">
         <div class="wrap">
@@ -69,13 +69,13 @@
             <nav class="main-nav" aria-label="主要導覽">
                 <ul>
                     {% unless page.url == "/" %}
-                    <li><a href="/">← Home</a></li>
+                    <li><a href="/">{{ site.ui.nav_home }}</a></li>
                     {% endunless %}
-                    <li><a href="/projects/" {% if page.url == "/projects/" %}aria-current="page"{% endif %}>Projects</a></li>
+                    <li><a href="/projects/" {% if page.url == "/projects/" %}aria-current="page"{% endif %}>{{ site.ui.nav_projects }}</a></li>
                     {% if site.posts.size > 0 %}
-                    <li><a href="/notes/" {% if page.url == "/notes/" %}aria-current="page"{% endif %}>Notes</a></li>
+                    <li><a href="/notes/" {% if page.url == "/notes/" %}aria-current="page"{% endif %}>{{ site.ui.nav_notes }}</a></li>
                     {% endif %}
-                    <li><a href="{% if page.url == '/' %}#about{% else %}/#about{% endif %}">About</a></li>
+                    <li><a href="{% if page.url == '/' %}#about{% else %}/#about{% endif %}">{{ site.ui.nav_about }}</a></li>
                 </ul>
             </nav>
         </div>
@@ -89,7 +89,7 @@
         <div class="ascii-shore"></div>
         <div class="wrap">
             <div class="footer-bar">
-                <span>&copy; {{ "now" | date: "%Y" }} {{ site.title }} <span aria-hidden="true">/</span> Paper &amp; Ink</span>
+                <span>&copy; {{ "now" | date: "%Y" }} {{ site.title }} <span aria-hidden="true">/</span> {{ site.ui.footer_tagline }}</span>
                 <div class="footer-social">
                     {% if site.social.linkedin %}
                     <a href="{{ site.social.linkedin }}" target="_blank" rel="noopener" class="social-link">LinkedIn</a>

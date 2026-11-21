@@ -25,7 +25,7 @@ layout: default
 <!-- 1. Projects -->
 <section class="page-section" id="projects">
     <div class="wrap">
-        {% include section-label.html en="Projects" zh="實作" %}
+        {% include section-label.html en=site.ui.projects_en zh=site.ui.projects_zh %}
 
         {% comment %} collection 預設依檔名排序，所以這裡自己依日期新→舊排；
                       featured 置頂，其餘依日期 {% endcomment %}
@@ -44,7 +44,7 @@ layout: default
         </div>
 
         {% if others.size > 0 %}
-        <a href="/projects/" class="show-more-btn">查看更多專案 →</a>
+        <a href="/projects/" class="show-more-btn">{{ site.ui.more_projects }}</a>
         {% endif %}
     </div>
 </section>
@@ -54,11 +54,11 @@ layout: default
 <section class="page-section" id="notes">
     <div class="wrap">
         <div class="measure measure--flush">
-            {% include section-label.html en="Notes" zh="札記" %}
+            {% include section-label.html en=site.ui.notes_en zh=site.ui.notes_zh %}
             {% assign recent = site.posts | slice: 0, 3 %}
             {% include note-list.html notes=recent %}
             {% if site.posts.size > 3 %}
-            <a href="/notes/" class="show-more-btn">查看全部札記 →</a>
+            <a href="/notes/" class="show-more-btn">{{ site.ui.more_notes }}</a>
             {% endif %}
         </div>
     </div>
@@ -70,7 +70,7 @@ layout: default
     <div class="wrap">
         {% comment %} 標題與內文共用同一條 measure，左邊界才會對齊 {% endcomment %}
         <div class="measure measure--flush">
-            {% include section-label.html en="About" zh="關於我" %}
+            {% include section-label.html en=site.ui.about_en zh=site.ui.about_zh %}
 
             <div class="about-inline prose">
                 {% capture about_md %}{% include about.md %}{% endcapture %}

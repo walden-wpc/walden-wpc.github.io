@@ -4,12 +4,49 @@ description: 張文柏的個人網站
 image: /assets/images/walden_card.webp
 url: "https://walden-wpc.github.io"
 
-# 首頁水面上的文字 —— 想改文案改這裡就好
+# ===================================================================
+# 網站上所有會被看到的固定文字，全部在這一段。
+# 想改任何一個字，改這裡就好，不用進版型檔案。
+# 改完存檔 -> 重新整理瀏覽器就看得到（jekyll serve 會自動重建）。
+# ===================================================================
+
+# 首頁水面上的文字
 hero:
   name_zh: 張文柏
   name_en: WEN-PO CHANG
   tagline: 神經科學背景，習慣從複雜的資料裡梳理出架構。現在把這件事帶到醫療與科技的交會處，順手把靈感做成能用的工具。
   # 「可以點擊」的提示不用文字，是 style.css 裡的 .hero-cue（一圈一圈盪開的墨點）
+
+ui:
+  # 導覽列
+  nav_home: ← Home
+  nav_projects: Projects
+  nav_notes: Notes
+  nav_about: About
+  skip_link: 跳到主要內容
+
+  # 區塊標題（左邊英文、右邊中文，格式是「Projects 實作」）
+  projects_en: Projects
+  projects_zh: 實作
+  projects_all_zh: 全部專案      # /projects/ 整頁列表用的
+  notes_en: Notes
+  notes_zh: 札記
+  about_en: About
+  about_zh: 關於我
+
+  # 按鈕與零星文字
+  more_projects: 查看更多專案 →
+  more_notes: 查看全部札記 →
+  notes_empty: 還沒有札記。
+  project_live: 實際體驗 ↗
+  project_code: 原始碼 ↗
+  footer_tagline: Paper & Ink
+
+  # 專案頁上方那塊資訊的欄位標籤
+  label_about: About
+  label_time: Time
+  label_build: Build
+  label_tags: Tags
 
 # 專案是 collection，不是 _posts。
 # 原因：專案不是「有日期的文章」，放在 _posts 會被迫吃到 /2026/04/20/xxx.html

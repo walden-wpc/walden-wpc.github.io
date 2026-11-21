@@ -42,8 +42,8 @@ layout: default
 
             {% if page.liveUrl or page.githubUrl %}
             <div class="project-card-links">
-                {% if page.liveUrl %}<a href="{{ page.liveUrl }}" target="_blank" rel="noopener" class="card-link card-link-live">實際體驗 ↗</a>{% endif %}
-                {% if page.githubUrl %}<a href="{{ page.githubUrl }}" target="_blank" rel="noopener" class="card-link card-link-code">原始碼 ↗</a>{% endif %}
+                {% if page.liveUrl %}<a href="{{ page.liveUrl }}" target="_blank" rel="noopener" class="card-link card-link-live">{{ site.ui.project_live }}</a>{% endif %}
+                {% if page.githubUrl %}<a href="{{ page.githubUrl }}" target="_blank" rel="noopener" class="card-link card-link-code">{{ site.ui.project_code }}</a>{% endif %}
             </div>
             {% endif %}
         </header>

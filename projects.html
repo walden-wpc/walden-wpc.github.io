@@ -7,7 +7,7 @@ description: 全部專案列表
 
 <section class="page-section" id="projects">
     <div class="wrap">
-        {% include section-label.html en="Projects" zh="全部專案" heading=true %}
+        {% include section-label.html en=site.ui.projects_en zh=site.ui.projects_all_zh heading=true %}
 
         {% assign all_projects = site.projects | sort: "date" | reverse %}
         {% assign featured = all_projects | where: "featured", true %}
