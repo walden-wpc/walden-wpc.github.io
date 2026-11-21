@@ -36,7 +36,7 @@
 
     {% comment %} 兩個主要字體先行預載，省掉「CSS 下載完才開始抓字體」的來回 {% endcomment %}
     <link rel="preload" href="/assets/fonts/maple-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/assets/fonts/notoseriftc-subset.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/genwanmin2tw/genwanmin2tw-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="/assets/fonts/fonts.css?v={{ site.time | date: '%s' }}">
     {% comment %} 後備分塊只在子集缺字時才用得到，不必卡住首次繪製 {% endcomment %}
     <link rel="stylesheet" href="/assets/fonts/fonts-fallback.css?v={{ site.time | date: '%s' }}"

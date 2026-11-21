@@ -7,17 +7,20 @@
       只含拉丁字母、標點、箭頭、框線與區塊字元。中日韓不在裡面，
       所以 --font-ui 的中文會自動落到系統無襯線字體，不多下載一個位元組。
 
-   2. Noto Serif TC（網站用字子集，約 390KB）
+   2. GenWanMin2 TW 源雲明體（網站用字子集，400 + 700 各約 390KB）
       只含這個網站目前真的用到的 1398 個字元（786 個漢字）。
-      可變字重 400-700，所以粗體是真的粗體，不是瀏覽器合成的。
-      一次下載，整站共用，之後都走快取。
+      筆畫交接處做了墨暈處理，是這個網站 Paper & Ink 概念的本體。
+      700 實際上是原字體的 SemiBold —— 中文內文用真 Bold 會糊成黑塊，
+      SemiBold 才是正解。
+      它也原生把 ' ' " " 做成拉丁字寬，所以不需要額外補丁。
 
    3. Noto Serif TC Fallback（108 個 unicode-range 分塊）
       寫了新文章、出現第 2 層沒有的字時的後備。瀏覽器只會抓
-      那一個分塊（幾十 KB），畫面不會破字。
-      想讓它回到最省的狀態：python tools/build-fonts.py --serif <來源字體>
+      那一個分塊，畫面不會破字（字形會看得出不同，重跑下面那行就好）。
+      python tools/build-fonts.py --serif <GenWanMin2TW-R.otf> --serif-bold <...-SB.otf>
 
-   Noto Serif TC 採 SIL Open Font License 1.1（見 noto-serif-tc/OFL.txt）
+   GenWanMin2 TW 採 SIL Open Font License 1.1（見 genwanmin2tw/ 底下）
+   Noto Serif TC 同樣是 OFL 1.1（見 noto-serif-tc/OFL.txt）
    Maple Mono 授權見 MapleMono-LICENSE.txt
    =================================================================== */
 
@@ -35,22 +38,20 @@
 
 /* 第 2 層：網站用字子集。不設 unicode-range，缺的字會自然往下一層找。 */
 @font-face {
-    font-family: "Noto Serif TC";
-    src: url("/assets/fonts/notoseriftc-subset.woff2") format("woff2");
-    font-weight: 400 700;
+    font-family: "GenWanMin2 TW";
+    src: url("/assets/fonts/genwanmin2tw/genwanmin2tw-400.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "GenWanMin2 TW";
+    src: url("/assets/fonts/genwanmin2tw/genwanmin2tw-700.woff2") format("woff2");
+    font-weight: 700;
     font-style: normal;
     font-display: swap;
 }
 
 /* 第 3 層（後備分塊）在 fonts-fallback.css，由 <head> 非同步載入 —— 119KB 的
    @font-face 宣告不該卡在首次繪製的關鍵路徑上。 */
-
-/* 彎引號 ' ' " " 在 Noto CJK 系列裡是全形字寬，用在英文上會多出半個字的
-   空隙（Dean' s、" Walden" ）。這裡把這四個字元導回系統的拉丁襯線字體。
-   系統若一個都沒有，這個 family 就不會成立，自然落回 Noto Serif TC。 */
-@font-face {
-    font-family: "Prose Quote";
-    src: local("Georgia"), local("Times New Roman"), local("Hoefler Text"),
-         local("Liberation Serif"), local("DejaVu Serif");
-    unicode-range: U+2018, U+2019, U+201C, U+201D;
-}

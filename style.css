@@ -7,8 +7,8 @@
                   中日韓字元自動落到系統無襯線（蘋果 PingFang／
                   Windows 微軟正黑／Android Noto），不額外下載。
      --font-prose 人的聲音：內文、標題、About
-                  Noto Serif TC 自架子集（約 390KB，可變字重 400–700，
-                  真粗體非合成），缺字時自動落到 108 個分塊後備。
+                  GenWanMin2 TW 源雲明體自架子集（400／700 各約 390KB，
+                  墨暈筆形），缺字時自動落到 Noto 的 108 個分塊後備。
    =================================================================== */
 
 /* ===================================
@@ -31,8 +31,8 @@
     /* 字體 */
     --font-ui: "Maple Mono", ui-monospace, SFMono-Regular, Consolas,
                "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
-    --font-prose: "Prose Quote", "Noto Serif TC", "Noto Serif TC Fallback",
-                  Georgia, "Songti TC", "Times New Roman", serif;
+    --font-prose: "GenWanMin2 TW", "Noto Serif TC Fallback", Georgia,
+                  "Songti TC", "Times New Roman", serif;
     --font-code: "Maple Mono", ui-monospace, SFMono-Regular, Consolas,
                  "PingFang TC", "Microsoft JhengHei", monospace;
 

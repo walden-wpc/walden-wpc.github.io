@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """
-重建網站字體（Maple Mono 拉丁子集 + Noto Serif TC 內文子集）。
+重建網站字體（Maple Mono 拉丁子集 + GenWanMin2 TW 內文子集）。
 
 為什麼要這支程式
 ----------------
 中日韓字體動輒 10-20MB。這個網站的做法是兩層：
 
-  第一層  notoseriftc-subset.woff2
-          只含「網站現有內容真正用到的字」（約 800 多個漢字），
-          一個檔案約 200KB，一次下載整站共用。
+  第一層  genwanmin2tw/genwanmin2tw-400.woff2 與 -700.woff2
+          只含「網站現有內容真正用到的字」（約 800 個漢字），
+          每個字重約 390KB，一次下載整站共用。
+          700 的來源是原字體的 SB（SemiBold）—— GenWanMin 沒有真 Bold，
+          而中文內文用真 Bold 會糊成黑塊，SemiBold 才是正解。
 
   第二層  noto-serif-tc/ 底下的 108 個分塊（Google Fonts 的 unicode-range 切法）
           當你寫了新文章、出現第一層沒有的字時，瀏覽器只會去抓
@@ -86,22 +88,30 @@ def subset(src, out, unicodes, label):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--maple", help="MapleMono-CN-Regular.ttf")
-    ap.add_argument("--serif", help="NotoSerifTC[wght].ttf")
+    ap.add_argument("--serif", help="GenWanMin2TW-R.otf（內文 400）")
+    ap.add_argument("--serif-bold", dest="serif_bold",
+                    help="GenWanMin2TW-SB.otf（內文 700）")
     args = ap.parse_args()
 
-    if not args.maple and not args.serif:
-        ap.error("至少要給 --maple 或 --serif 其中一個")
+    if not any([args.maple, args.serif, args.serif_bold]):
+        ap.error("至少要給 --maple / --serif / --serif-bold 其中一個")
 
     fonts_dir = ROOT / "assets" / "fonts"
     fonts_dir.mkdir(parents=True, exist_ok=True)
 
-    if args.serif:
+    if args.serif or args.serif_bold:
         chars = site_charset()
         cjk = sum(1 for c in chars if "一" <= c <= "鿿")
         print(f"網站用字：{len(chars)} 個（其中漢字 {cjk} 個）")
         codes = ",".join("U+%04X" % ord(c) for c in sorted(chars))
-        subset(pathlib.Path(args.serif), fonts_dir / "notoseriftc-subset.woff2",
-               codes, "Noto Serif TC 子集")
+        serif_dir = fonts_dir / "genwanmin2tw"
+        serif_dir.mkdir(parents=True, exist_ok=True)
+        if args.serif:
+            subset(pathlib.Path(args.serif),
+                   serif_dir / "genwanmin2tw-400.woff2", codes, "GenWanMin2 TW 400")
+        if args.serif_bold:
+            subset(pathlib.Path(args.serif_bold),
+                   serif_dir / "genwanmin2tw-700.woff2", codes, "GenWanMin2 TW 700")
 
     if args.maple:
         subset(pathlib.Path(args.maple), fonts_dir / "maple-mono-latin.woff2",
