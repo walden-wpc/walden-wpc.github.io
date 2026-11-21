@@ -33,13 +33,13 @@
 
 ## Skills
 
-| 領域 | 技術 |
-|------|------|
-| 資料分析/統計 | Python, NumPy, statsmodels, bctpy, ANCOVA, NBS, permutation testing, graph theory |
-| 神經影像 | diffusion MRI, tractography, COMMIT2, MRtrix3 |
-| 高效能運算 | GPU computing (CuPy) |
-| 網頁/前端 | Vanilla JS, Next.js, Jekyll, PWA, MapLibre, D3.js, Three.js |
-| 演算法 | Dijkstra, binary min-heap |
-| 資料視覺化 | interactive 3D (Plotly), map visualization (MapLibre), D3.js |
+資料分析／統計
+: Python, NumPy, statsmodels, bctpy, ANCOVA, NBS, permutation testing, graph theory
+
+神經影像
+: diffusion MRI, tractography, COMMIT2, MRtrix3
+
+高效能運算
+: GPU computing (CuPy)
 
 #### 如果你對平面設計或調酒有興趣，也歡迎交流：）

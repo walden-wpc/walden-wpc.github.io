@@ -84,6 +84,25 @@ math: false                      # true 才載入 KaTeX（$...$ 數學式）
 - `_config.yml` 設了 `kramdown: hard_wrap: true`，**單一換行會變成實際換行**。
   想要一個段落就不要在中間亂斷行。
 
+### 「標籤 → 內容」的成對資料（例如 Skills）
+
+用定義清單，**不要用表格**。兩欄表格在窄螢幕一定會把中文擠成
+「資料分/析/統/計」，而這種資料本來就是一組一組的，堆疊才是它真正的結構：
+
+```markdown
+資料分析／統計
+: Python, NumPy, statsmodels
+
+神經影像
+: diffusion MRI, tractography
+```
+
+標籤會用襯線（人的聲音），內容用 Maple Mono（機器的聲音），
+桌機和手機長得一樣。
+
+真的需要多欄表格時照常寫 markdown 表格就好 —— `walden.js` 會依欄數
+自動處理（兩欄在窄螢幕堆疊，三欄以上包成可橫向捲動）。
+
 ---
 
 ## 完整流程

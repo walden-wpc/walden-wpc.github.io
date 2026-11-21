@@ -1027,6 +1027,45 @@ canvas.ascii-layer {
 }
 
 /* ===================================
+   定義清單（「標籤 → 內容」的成對資料，例如 Skills）
+   -----------------------------------
+   不用表格：兩欄表格在窄螢幕一定會把中文擠成「資料分/析/統/計」，
+   而這種資料本來就是一組一組的，堆疊才是它真正的結構。
+   markdown 寫法（kramdown 定義清單）：
+
+       資料分析／統計
+       : Python, NumPy, statsmodels
+
+   標籤走人的聲音（襯線），內容走機器的聲音（Maple Mono）。
+   =================================== */
+.prose dl {
+    margin: var(--space-md) 0;
+    border-top: 1px solid var(--color-rule);
+}
+
+.prose dt {
+    font-family: var(--font-prose);
+    font-size: var(--step-0);
+    line-height: 1.6;
+    color: var(--color-ink-faint);
+    letter-spacing: 0.04em;
+    padding-top: var(--space-sm);
+}
+
+.prose dd {
+    margin: 2px 0 0;
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-rule);
+    font-family: var(--font-ui);
+    font-size: var(--step--1);
+    line-height: 1.75;
+}
+
+.prose dd p {
+    margin: 0;
+}
+
+/* ===================================
    表格在窄螢幕
    -----------------------------------
    技能表這種「標籤 → 內容」的兩欄表，硬塞進 375px 會把中文擠成
