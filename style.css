@@ -1,14 +1,19 @@
 /* ===================================================================
    Walden — Paper & Ink
    -------------------------------------------------------------------
-   字體分工（兩種聲音）。@font-face 全部在 assets/fonts/fonts.css。
-     --font-ui    機器的聲音：導覽、標籤、meta、tag、按鈕、程式碼
-                  拉丁字母用 Maple Mono（子集化 48KB），
-                  中日韓字元自動落到系統無襯線（蘋果 PingFang／
-                  Windows 微軟正黑／Android Noto），不額外下載。
+   字體規則。@font-face 全部在 assets/fonts/fonts.css。
+
+   全站的中文只有一種字體：GenWanMin2 TW 源雲明體。
+   分成兩種聲音的是拉丁字母 ——
+
+     --font-ui    機器的聲音：導覽、標籤、meta、tag、按鈕、表格
+                  拉丁字母用 Maple Mono（子集化 48KB），中文接源雲明體。
      --font-prose 人的聲音：內文、標題、About
-                  GenWanMin2 TW 源雲明體自架子集（400／700 各約 390KB，
-                  墨暈筆形），缺字時自動落到 Noto 的 108 個分塊後備。
+                  拉丁與中文都用源雲明體（400／700 各約 400KB，墨暈筆形）。
+     --font-code  只給 <code> / <pre>：拉丁 Maple Mono，中文落到系統無襯線
+                  （程式碼區塊裡出現襯線中文會很怪，這是唯一的例外）。
+
+   中文缺字時會自動落到 Noto Serif TC 的 108 個分塊後備，不會破版。
    =================================================================== */
 
 /* ===================================
@@ -30,7 +35,7 @@
 
     /* 字體 */
     --font-ui: "Maple Mono", ui-monospace, SFMono-Regular, Consolas,
-               "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+               "GenWanMin2 TW", "Noto Serif TC Fallback", serif;
     --font-prose: "GenWanMin2 TW", "Noto Serif TC Fallback", Georgia,
                   "Songti TC", "Times New Roman", serif;
     --font-code: "Maple Mono", ui-monospace, SFMono-Regular, Consolas,

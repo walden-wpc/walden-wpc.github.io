@@ -6,7 +6,7 @@ description: 極簡。互動。個人網站。
 githubUrl: https://github.com/walden-wpc
 liveUrl: https://walden-wpc.github.io
 spend: 7 days
-tags: [Jekyll, Three.js, GitHub Pages]
+tags: [Jekyll, Canvas 2D, ASCII Art, Vanilla JS, GitHub Pages]
 image: /assets/images/walden_card.webp
 ---
 
@@ -18,9 +18,9 @@ image: /assets/images/walden_card.webp
 
 - **Paper & Ink**：網站本體去除所有非必要的顏色，僅保留黑白與灰階，模擬紙本閱讀體驗，同時更聚焦在內容本身。
 
-- **ASCII 互動藝術**：使用 Three.js 與 ASCII Effect 技術，將首頁上部打造為一個動態的「數位瓦爾登湖」。用程式碼即時演算的數學波紋復現我腦中想象的畫面。
+- **ASCII 互動藝術**：首頁上部是一個動態的「數位瓦爾登湖」，用 Canvas 2D 手刻，沒有任何外部依賴。每一格字元的明暗都是即時演算的波紋方程式，復現我腦中想象的畫面。
 
 ## 技術
 -   **Jekyll**
--   **Three.js**
+-   **Canvas 2D**（手刻 ASCII 渲染，零外部依賴）
 -   **GitHub Pages**
